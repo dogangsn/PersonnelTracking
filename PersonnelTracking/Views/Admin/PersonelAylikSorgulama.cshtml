@@ -1,0 +1,520 @@
+﻿
+@{
+    ViewBag.Title = "PersonelAylikSorgulama";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<main>
+    <style>
+        .table-wrapper-2 {
+            display: block;
+            max-height: 405px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+        .scrollbar {
+            margin-left: 30px;
+            float: left;
+            height: 300px;
+            width: 65px;
+            background: #fff;
+            overflow-y: scroll;
+            margin-bottom: 25px;
+        }
+
+        .scrollbar-primary::-webkit-scrollbar {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        .scrollbar-primary::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+            background-color: #4285F4;
+        }
+    </style>
+    @*<button>@Html.ActionLink("Müşteri Listesi (PDF)","DetailsReport","Admin")</button>*@
+    <div id="loader-wrapper" style="display:none;">
+        <div id="loader"></div>
+    </div>
+    <div class="container-fluid text-center">
+        <div class="card card-cascade narrower">
+            <section>
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 mr-0">
+                        <div class="view gradient-card-header light-blue lighten-1">
+                            <h2 class="h2-responsive mb-0">Personele Göre Aylık Pauntaj</h2>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <br />
+            <div class="col-md-4">
+                <div class="md-form">
+                    <label for="bday-month">Dönem Seçiniz</label>
+                    <input id="bday-month" type="month" name="bday-month" value="@DateTime.Now.ToString("yyyy-MM")">
+                    @*<label for="date-picker-example" class="active">Dönem Seçiniz</label>*@
+                </div>
+            </div>
+            <div class="row card-body pt-3">
+                <div class="row">
+                    <div class="col-md-8 col-lg-7 col-xl-9">
+                        <div class="col-md-4">
+                            <div class="md-form" style="width: 600px">
+                                <select class="mdb-select" id="personel">
+                                    <option value="" disabled selected></option>
+                                    @foreach (var item in Model)
+                                    {
+                                        <option value="@item.KId" data-icon="../Content/PersonelFoto/@item.FotoYol" class="rounded-circle">@item.PAdSoyad</option>
+                                    }
+                                </select>
+                                <label>Personel Seçiniz ...</label>
+                            </div>
+
+                            <button class="btn btn-success" id="KayitGetir" style="width:max-content;">Kayıtları Getir</button>
+                            <hr /> <br />
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="text-align:center; padding-left: 87px; display:none" id="PersonelAdSoyad">
+                        <h3 style="border: ridge;">Personel AdıSoyadı (Dep.)</h3>
+                        <hr />
+                    </div>
+
+                    @*<div class="col-lg-4" style="display:none" id="chartSablon">
+                            <div class="card">
+                                <div class="card-body">
+                                    <canvas id="pieChart"></canvas>
+                                </div>
+                            </div>
+                            <br />
+                        </div>*@
+
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row mx-1">
+                            <div class="col-lg-12 col-md-12" style="display:none" id="TotalCalisma">
+                                <div class="card">
+                                    <div class="view view-cascade gradient-card-header purple-gradient">
+                                        <!-- Title -->
+                                        <h2 class="card-header-title">Calisma Saatleri</h2>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped" id="Kayitlar">
+                                                <thead>
+                                                    <tr>
+                                                        @*<th scope="col">#</th>
+                                                            <th scope="col">Personel Adı Soyadı</th>*@
+                                                        <th scope="col">1.Gün</th>
+                                                        <th scope="col">2.Gün</th>
+                                                        <th scope="col">3.Gün</th>
+                                                        <th scope="col">4.Gün</th>
+                                                        <th scope="col">5.Gün</th>
+                                                        <th scope="col">6.Gün</th>
+                                                        <th scope="col">7.Gün</th>
+                                                        <th scope="col">8.Gün</th>
+                                                        <th scope="col">9.Gün</th>
+                                                        <th scope="col">10.Gün</th>
+                                                        <th scope="col">11.Gün</th>
+                                                        <th scope="col">12.Gün</th>
+                                                        <th scope="col">13.Gün</th>
+                                                        <th scope="col">14.Gün</th>
+                                                        <th scope="col">15.Gün</th>
+                                                        <th scope="col">16.Gün</th>
+                                                        <th scope="col">17.Gün</th>
+                                                        <th scope="col">18.Gün</th>
+                                                        <th scope="col">19.Gün</th>
+                                                        <th scope="col">20.Gün</th>
+                                                        <th scope="col">21.Gün</th>
+                                                        <th scope="col">22.Gün</th>
+                                                        <th scope="col">23.Gün</th>
+                                                        <th scope="col">24.Gün</th>
+                                                        <th scope="col">25.Gün</th>
+                                                        <th scope="col">26.Gün</th>
+                                                        <th scope="col">27.Gün</th>
+                                                        <th scope="col">28.Gün</th>
+                                                        <th scope="col">29.Gün</th>
+                                                        <th scope="col">30.Gün</th>
+                                                        <th scope="col">31.Gün</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        @*<th scope="row">1</th>
+                                                            <td>-</td>*@
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                        <td>-</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <hr />
+                                        <div style="text-align: right;">
+                                            <p style="text-align: right;" id="totalCalisma">Total Calışma Zamanı : <strong> 0s:00dk</strong></p>
+                                            <p style="text-align: right;" id="TotalMola">Total Mola Zamanı : <strong> 0s:00dk</strong></p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br /> <br />
+                        <div class="col-md-12" style="display:none" id="IzinlerAlani">
+                            <div class="card">
+                                <div class="view view-cascade gradient-card-header purple-gradient">
+                                    <!-- Title -->
+                                    <h2 class="card-header-title">İzinler</h2>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive text-nowrap">
+                                        <div class="table-wrapper-2 scrollbar-primary">
+                                            <table class="table" id="İzinler">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Izin Turu</th>
+                                                        <th scope="col">Başlangıç Tarihi</th>
+                                                        <th scope="col">Bitiş Tarihi</th>
+                                                        <th scope="col">Açıklama</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th></th>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br /><br />
+                        <div class="col-md-12" style="display:none" id="GenelKayit">
+                            <div class="card">
+                                <div class="card-body">
+                                    <canvas id="barChart"></canvas>
+                                </div>
+                            </div>
+
+                        </div>
+                        <br /><br />
+
+                        <div class="col-md-12" style="display:none" id="BordroHesapla">
+                            <div class="card">
+                                <div class="view view-cascade gradient-card-header purple-gradient">
+                                    <!-- Title -->
+                                    <h2 class="card-header-title">Ücret Hesaplama</h2>
+                                </div>
+                                <div class="card-body">
+                                    <div class="md-form">
+                                        <input type="text" id="MaasMiktar" class="form-control">
+                                        <label for="form1">Maaşını Giriniz</label>
+                                    </div>
+                                    <div class="md-form">
+                                        <label for="bday-month">Dönem Seçiniz</label>
+                                        <input id="MaasDonem" type="month" name="bday-month" value="2018-12">
+                                        @*<label for="date-picker-example" class="active">Dönem Seçiniz</label>*@
+                                    </div>
+                                    <br />
+                                    <button type="button" class="btn btn-success btn-rounded" id="BordroHesaplaClick">Hesapla</button>
+                                </div>
+                                <br />
+                                <div style="text-align: right; padding-right: 50px;">
+                                    <p style="text-align: right;" id="NetMaas">Net Maaş Ücreti : <strong> 0,00 ₺</strong></p>
+                                </div>
+                                <p>Yapım Aşamasında - Henüz Aktif Değil</p>
+                            </div>
+                        </div>
+
+                        <br />
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="col-lg-12 col-md-6 mb-4" style="display:none" id="GirisCikislar">
+                            <div class="card">
+                                <div class="view view-cascade gradient-card-header purple-gradient">
+                                    <!-- Title -->
+                                    <h2 class="card-header-title">Giriş-Çıkışları</h2>
+                                </div>
+                                <div class="card-body">
+                                    <table id="girisCikisTAblo" class="table table-striped" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th class="th-sm">
+                                                    Tarih
+                                                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                                                </th>
+                                                <th class="th-sm">
+                                                    Giriş Saati
+                                                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                                                </th>
+                                                <th class="th-sm">
+                                                    Çıkış Saati
+                                                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br /><br />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="~/Scripts/addons/datatables.min.js"></script>
+    <script>
+        var PId = 0;
+        var CalismaZaman = [];
+        var MolaZaman = [];
+        var YapilanIslem = 0;
+        $(document).ready(function () {
+            $('.mdb-select').material_select();
+        });
+
+        $("#personel").change(function () {
+            PId = $(this).val();
+        });
+
+
+        $('#KayitGetir').click(function () {
+            if (PId == 0) {
+                toastr["error"]("Er:Personel Seçiniz...");
+            } else {
+                $("#loader-wrapper").show();
+                var donem = $('#bday-month').val();
+                $.ajax({
+                    type: "GET",
+                    url: "./PersonelPuantaj?id=" + PId,
+                    success: function (data) {
+                        $("#loader-wrapper").hide();
+                        $('#PersonelAdSoyad').show();
+                        $('#IzinlerAlani').show();
+                        $('#chartSablon').show();
+                        $('#GenelKayit').show();
+                        $('#GirisCikislar').show();
+                        $('#TotalCalisma').show();
+                        //$('#BordroHesapla').show();
+                        //console.log(data);
+                        var obj = JSON.parse(data);
+                        var adsoyad = obj.PAdSoyad;
+                        //console.log(adsoyad);
+                        $.each(obj, function (i, item) {
+                            document.getElementById("PersonelAdSoyad").innerHTML = '<h3 class="mb-3 font-weight-bold" style="border: ridge;">' + adsoyad + ' (' + donem + ')</h3>';
+                        })
+                    }
+
+                })
+
+                $.ajax({
+                    type: "GET",
+                    url: "./PersonelIzinleri?id=" + PId + "&donem=" + donem,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        // console.log(obj);
+                        var list = $('#İzinler');
+                        list.find('tbody tr').remove();
+                        list.find('tbody td').remove();
+                        list.find('div').remove();
+                        var rows;
+                        $.each(obj, function (i, item) {
+                            rows += "<tr>" +
+                                "<td>" + item.id + "</td>" +
+                                "<td>" + item.IzinTuru + "</td>" +
+                                "<td>" + item.BaslangicTarihi + "</td>" +
+                                "<td>" + item.BitisTarihi + "</td>" +
+                                "<td>" + item.Aciklama + "</td>"
+                            "</tr>";
+                        });
+                        $('#İzinler tbody').html(rows);
+                    }
+                })
+
+                $.ajax({
+                    type: "GET",
+                    url: "./AylikGirisCikis?id=" + PId + "&donem=" + donem,
+                    success: function (data) {
+
+                        var obj = JSON.parse(data);
+                        // console.log(data);
+
+                        var list = $('#girisCikisTAblo');
+                        list.find('tbody tr').remove();
+                        list.find('tbody td').remove();
+                        list.find('div').remove();
+                        var row;
+                        $.each(obj, function (i, item) {
+                            $.each(item.PersonelGirisCikis, function (key, value) {
+                                row += "<tr><td>" + value.Tarih.split("T")[0].substring(5, 10) + "</td>";
+                                if (value.GirisSaati != null && value.CikisSaati != null) {
+                                    row += "<td>" + value.GirisSaati.split("T")[1].substring(0, 5) + "</td>" +
+                                        "<td>" + value.CikisSaati.split("T")[1].substring(0, 5) + "</td></tr>";
+                                } else {
+                                    row += "<td>" + "-" + "</td>" +
+                                        "<td>" + "-" + "</td></tr>";
+                                }
+
+
+                            });
+                        });
+                        $('#girisCikisTAblo tbody').html(row);
+                    }
+                })
+
+
+                var donem = $('#bday-month').val();
+                var puantaj = [];
+                $.ajax({
+                    type: "GET",
+                    url: "./AylikTotalCalisma?donem=" + donem + "&id=" + PId,
+                    success: function (data) {
+                        data = JSON.parse(JSON.parse(JSON.stringify(data)));
+                        $("#loader-wrapper").hide();
+                        console.log(data[0]);
+                        document.getElementById("TotalMola").innerHTML = "Total Çalışma Zamanı :<strong>0 dk</strong>";
+                        document.getElementById("totalCalisma").innerHTML = "Total Mola Zamanı :<strong>0 dk</strong>";
+                        var list = $('#Kayitlar tbody');
+                        list.find('tbody tr').remove();
+                        list.find('tbody th').remove();
+                        list.find('div').remove();
+                        var rows;
+                        $.each(data, (i, item) => {
+                            //puantaj = item.MonthTime;
+                            console.log(item.TotalAylikCalisma);
+                            rows += "<tr>";
+                            $.each(item.MonthTime, function (key, value) {
+                                console.log('' + key + ' ' + value.CalismaZamani);
+                                if (value.CalismaZamani == "00s:00dk" || value.CalismaZamani == undefined) {
+                                    rows += "<td>-</td>"
+                                } else {
+                                    rows += "<td>" + value.CalismaZamani + "</td>";
+                                }
+                            });
+                            rows += "</tr>";
+                            document.getElementById("totalCalisma").innerHTML = "Total Çalışma Zamanı :<strong> " + item.TotalAylikCalisma + "</strong>";
+                            document.getElementById("TotalMola").innerHTML = "Total Mola Zamanı :<strong> " + item.TotalAylikMola + "</strong>";
+                            CalismaZaman.push(item.TotalAylikCalisma);
+
+                        })
+                        $('#Kayitlar tbody').html(rows);
+                    }
+                })
+            }
+        });
+
+        $('#BordroHesaplaClick').click(function () {
+            var donem = $('#MaasDonem').val();
+            var Miktar = $('#MaasMiktar').val();
+            $.ajax({
+                type: "GET",
+                url: "./SalaryCalculator?id=" + PId + "&donem=" + donem + "&Miktar=" + Miktar,
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+
+
+        });
+
+
+        ////pie
+        //var ctxP = document.getElementById("pieChart").getContext('2d');
+        //var myPieChart = new Chart(ctxP, {
+        //    type: 'pie',
+        //    data: {
+        //        labels: ["Müşteri", "Izinli", "Normal"],
+        //        datasets: [
+        //            {
+        //                data: [30, 50, 100],
+        //                backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C"],
+        //                hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870"]
+        //            }
+        //        ]
+        //    },
+        //    options: {
+        //        responsive: true
+        //    }
+        //});
+        console.log(CalismaZaman);
+        var ctxB = document.getElementById("barChart").getContext('2d');
+        var myBarChart = new Chart(ctxB, {
+            type: 'bar',
+            data: {
+                labels: ["Total Calışma"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [CalismaZaman],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+</main>

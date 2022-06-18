@@ -1,0 +1,106 @@
+﻿@*@model IEnumerable<Kod_Yazilim_Personel.ViewModel.HareketModel>*@
+@model IEnumerable<Kod_Yazilim_Personel.ViewModel.KayitDurumu>
+@{
+    ViewBag.Title = "PersonelDurumu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main>
+    <style>
+        .table-fixed {
+            table-layout: fixed;
+            overflow: hidden;
+        }
+    </style>
+    <br />
+    <div class="container-fluid mt-5">
+        <div class="card card-cascade narrower">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 mr-0">
+                    <div class="view gradient-card-header light-blue lighten-1">
+                        <h2 class="h2-responsive mb-0">Personel Durumu</h2>
+                    </div>
+                    <br />
+                    <div class="col-lg-8 col-md-7">
+                        <form class="form-inline mt-2 ml-2">
+                            <input class="form-control my-0 py-0" type="text" placeholder="Ad Soyad Arama" style="max-width: 150px;" id="myInput" onkeyup="myFunction()">
+                            <button class="btn btn-sm btn-primary ml-2 px-1"><i class="fa fa-search"></i>  </button>
+                        </form>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-hover table-responsive-md table-fixed" id="Kayit">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Adı Soyadı</th>
+                        <th>Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var kayitlar in Model)
+                    {
+                        if (kayitlar.Islem == "İÇERDE")
+                        {
+                            <tr style="background-color: #c7f3c7;">
+                                <th>#</th>
+                                <td>@kayitlar.PAdSoyad</td>
+                                <td>@kayitlar.Islem</td>
+                            </tr>
+                        }
+                        else if (kayitlar.Islem == "GELMEDİ")
+                        {
+                            <tr style="background-color: #fb0d0dbf; color:white;">
+                                <th>#</th>
+                                <td>@kayitlar.PAdSoyad</td>
+                                <td>@kayitlar.Islem</td>
+                            </tr>
+                        }
+                        else if (kayitlar.Islem == "DIŞARDA")
+                        {
+                            <tr style="background-color: #fba0a087;">
+                                <th>#</th>
+                                <td>@kayitlar.PAdSoyad</td>
+                                <td>@kayitlar.Islem</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr style="background-color: #ecd14b87;">
+                                <th>#</th>
+                                <td>@kayitlar.PAdSoyad</td>
+                                <td>@kayitlar.Islem</td>
+                            </tr>
+                        }
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("Kayit");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+    </script>
+</main>

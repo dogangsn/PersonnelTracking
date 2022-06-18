@@ -1,0 +1,58 @@
+﻿<!-- Modal -->
+<div class="modal fade" id="PersonelKayit" tabindex="-1" role="dialog" aria-labelledby="personelModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="personelModalLabel">Personel Kayıt</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="md-form" style="margin-left:2.5rem; margin-right: 12.5rem;">
+                    <input type="text" id="UserID" class="form-control">
+                    <label for="form1">Kart ID</label>
+                    @*@Html.TextBoxFor(model => model.KartId, new { @class = "form-control", @placeholder = "KartId" })*@
+                </div>
+                <div class="md-form" style="margin-left:2.5rem; margin-right: 12.5rem;">
+                    <input type="text" id="PUserName" class="form-control">
+                    <label for="form1">Ad Soyad</label>
+                    @*@Html.TextBoxFor(model => model.PAdSoyad, new { @class = "form-control", @placeholder = "PAdSoyad" })*@
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSubmit" onclick="SaveToUser()">Save</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SaveToUser() {
+        if ($('#UserID').val() == "" && $('#UserName').val() == "") {
+            toastr["danger"]("Boş Bırakılmaz");
+        } else {
+            let data = {
+                KartID: $('#UserID').val(),
+                PAdSoyad: $('#PUserName').val()
+            };
+            $.ajax({
+                url: './ManuekPersonelKayit',
+                method: 'POST',
+                data: data,
+                success: function (result) {
+                    if (data.islem) {
+                        window.location.href = './PersonelListe';
+                        $('#PersonelKayit').modal('hide');
+                    }
+                    else {
+                        window.location.href = './PersonelListe';
+                        $('#PersonelKayit').modal('hide');
+                    }
+                }
+            });
+        }
+    }
+</script>

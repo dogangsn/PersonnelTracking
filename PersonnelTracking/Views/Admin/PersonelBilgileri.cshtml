@@ -1,0 +1,471 @@
+﻿@model IEnumerable<Kod_Yazilim_Personel.App_Data.KayitliPersonel>
+@{
+    ViewBag.Title = "PersonelBilgileri";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<hr />
+<style>
+    ul.striped li {
+        padding: .5rem;
+        border-bottom: 1px solid rgba(0,0,0,.15);
+    }
+
+    .Bilgi {
+        border: 1px solid #ddd;
+        width: 24%;
+        background-color: white;
+        min-height: 50px;
+        position: fixed;
+    }
+</style>
+<main>
+    <div class="container-fluid">
+        <section class="section team-section">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row mb-1">
+                        <div class="col-md-9">
+                            <h4 class="h4-responsive mt-1">Personel Bilgileri</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="md-form">
+                                <input placeholder="Search..." type="text" class="form-control"  id="myInput" onkeyup="myFunction()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-1">
+                            <div class="tabs-wrapper">
+                                <ul class="nav classic-tabs tabs-primary primary-color" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link waves-light active waves-effect waves-light" data-toggle="tab" href="#panel83" role="tab">Personal Clients</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link waves-light  waves-effect waves-light" data-toggle="tab" href="#panel84" role="tab">Silinen Personel</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-content card">
+                                <div class="tab-pane fade show active" id="panel83" role="tabpanel">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-responsive-md table-fixed" id="KayitliPersonel">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>KartID</th>
+                                                    <th>First Name</th>
+                                                    <th style="text-align:center">Bilgi/Edit/Remove</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var kayit in Model)
+                                                {
+                                                    <tr>
+                                                        <th>@kayit.KId</th>
+                                                        <th>@kayit.KartID</th>
+                                                        <th>@kayit.PAdSoyad</th>
+                                                        <td style="text-align: center;">
+                                                            <a class="btn-floating blue-gradient" onclick="Bilgi(@kayit.KId)"><i class="fa fa-user"></i></a>
+                                                            <a class="btn-floating peach-gradient" onclick="Record(@kayit.KId)"><i class="fa fa-pencil"></i></a>
+                                                            <a class="btn-floating btn-yt sil" data-id="@kayit.KId"><i class="fa fa-close" aria-hidden="true"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="panel84" role="tabpanel">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-responsive-md table-fixed" id="SilinenPersonel">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>KartID</th>
+                                                    <th>First Name</th>
+                                                    <th style="text-align:center">Kalıcı Sil</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <tr>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <th></th>
+                                                    <td></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-1">
+                    <div class="card profile-card Bilgi" style="margin-top: 77px;">
+                        <div class="avatar z-depth-1-half mb-4" style="max-width: 150px; max-height: 150px; margin: -70px auto 0; -webkit-border-radius: 50%; border-radius: 50%; overflow: hidden;" id="BilgiImage">
+                            <img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg " class="rounded-circle" alt="First sample avatar image">
+                        </div>
+                        <div class="card-body pt-0 mt-0">
+                            <div class="text-center" id="adsoyad">
+                                <h3 class="mb-3 font-weight-bold"><span>....</span></h3>
+                            </div>
+
+                            <ul class="striped list-unstyled" id="PrsKimlik">
+                                <li><strong>E-mail address:</strong>-</li>
+                                <li><strong>Phone number:</strong>-</li>
+                                <li><strong>Doğum Tarihi:</strong>-</li>
+                                <li><strong>Adres:</strong>-</li>
+                                <li><strong>Ise Başlama Tarihi:</strong>-</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <br /><br />
+
+    <!-- Personel Bilgilerini Duzenle Modalı-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-notify modal-info" role="document">
+            <div class="modal-content">
+                @*@Html.Partial("_KayitAyrinti");*@
+                <div class="modal-header" id="MyModal">
+                    <h5 class="modal-title heading lead" id="exampleModalLabel">Personel Bilgileri</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-5 col-xl-4 d-flex justify-content-center">
+                            <form class="md-form">
+                                <div class="file-field">
+                                    <div class="mb-4">
+                                        <div class="col-md-4 thumbnail" id="UploadedImage"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-center">
+                                        <div class="file-field">
+                                            <a class="btn-floating peach-gradient mt-0 float-left">
+                                                <i class="fa fa-paperclip" aria-hidden="true" style="color: antiquewhite;"></i>
+                                                <input type="file" id="Foto">
+                                            </a>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text" placeholder="Upload your file" style="width:128px;" id="Foto">
+                                            </div>
+                                            <a href="#" class="btn btn-sm btn-danger" onclick="UploadImage()">Upload</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- Grid column -->
+                        <div class="col-md-8 col-lg-3 col-xl-4 mb-r">
+                            <div class="md-form">
+                                <input type="hidden" id="id" class="form-control">
+                                <input type="text" id="personelAdSoyad" class="form-control">
+                                <label for="form1">Ad Soyad</label>
+                            </div>
+                            <div class="md-form">
+                                <input placeholder="@DateTime.Now.ToShortDateString()" type="date" id="datepicker" data-date-format="DD MMM YYYY" class="form-control datepicker">
+                                <label for="form1">Doğum Tarihi</label>
+                            </div>
+                            <div class="md-form">
+                                <input type="text" id="EpostaAdresi" class="form-control">
+                                <label for="form1">E-Posta</label>
+                            </div>
+                            <div class="md-form">
+                                <input type="text" id="phone" class="form-control">
+                                <label for="form1">Phone Number</label>
+                            </div>
+                            <div class="md-form">
+                                <input placeholder="@DateTime.Now.ToShortDateString()" type="date" id="IseBaslama" data-date-format="DD MMM YYYY" class="form-control datepicker">
+                                <label for="form1">Işe Başlama Tarihi</label>
+                            </div>
+                            <div class="md-form disabled">
+                                <select class="mdb-select" id="Departman">
+                                    <option value=""></option>
+                                    <option value="1">Yazılım</option>
+                                    <option value="2">Eğitim-Destek</option>
+                                    <option value="3">İdari</option>
+                                </select>
+                                <label>Departman</label>
+                            </div>
+                            <div class="md-form">
+                                <textarea id="Adres" class="form-control md-textarea" length="120" rows="3"></textarea>
+                                <label for="textarea-char-counter">Adres</label>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info waves-effect waves-light" id="DetailsUpdate">Güncelle</button>
+                    <button type="button" class="btn btn-outline-info waves-effect" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- //////////////////////////////////////-->
+    <!-- Personel Silmekten Emin misiniz -->
+    <div class="modal fade" id="silModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-notify modal-danger" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="heading lead">Personel Sil</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="fa fa-times fa-4x animated rotateIn"></i>
+                        <input type="hidden" id="silId" />
+                        <p>
+                            Kayitli Personeli Silmek İstediğinize Emin Misiniz ?
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <a type="button" class="btn btn-danger" id="btnSil">Kaydı Sil</a>
+                    <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ////////////////-----------//////////////-->
+
+    <script>
+
+        $(document).ready(function () {
+            $('.mdb-select').material_select();
+            $('.datepicker').pickadate({
+                monthsFull: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+                monthsShort: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Aug', 'Eyl', 'Eki', 'Kas', 'Ara'],
+                weekdaysFull: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+                weekdaysShort: ['Pzr', 'Pzt', 'Sal', 'Car', 'Per', 'Cum', 'Cmt'],
+                today: 'Bugün',
+                clear: 'Temizle',
+                close: 'Kapat',
+                labelMonthNext: 'Sonraki Ay',
+                labelMonthPrev: 'Önceki Ay',
+                labelMonthSelect: 'Ay Seçiniz',
+                labelYearSelect: 'Yıl Seçiniz',
+                format: 'dd.mm.yyyy',
+            });
+
+
+            $.ajax({
+                type: "GET",
+                url: "./SilinenPersonller",
+                success: function (data) {           
+                    var list = $('#SilinenPersonel');
+                    list.find('tbody tr').remove();
+                    list.find('tbody th').remove();
+                    list.find('div').remove();
+                    var rows;
+                    $.each( JSON.parse(data), function (i, item) {
+                        console.log(item.Tarih);
+                        rows += "<tr>" +
+                        "<th>" + item.KId + "</th>" +
+                        "<th>" + item.KartID + "</th>" +
+                        "<th>" + item.PAdSoyad + "</th>" +
+                        "<th style='text-align: center'>" + "<a class='btn-floating btn-yt sil' data-id='+ " + item.KId + "'><i class='fa fa-close' aria-hidden='true'></i></a>" + "</th>"
+                        "</tr>";
+                    });
+                    $('#SilinenPersonel tbody').html(rows);
+                }
+
+
+            })
+
+        });
+
+        function Record(KayitId) {
+            var url = "./PersonelRecord?KayitId=" + KayitId;
+            $("#myModal").modal();
+            $("#personelAdSoyad").trigger("focusin");
+            $("#EpostaAdresi").trigger("focusin");
+            $("#phone").trigger("focusin");
+            $("#Adres").trigger("focusin");
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    var dogumtarihi = new Date(parseInt(obj.DogumTarihi));
+                    var Formatdogumtarihi = obj.DogumTarihi.substring(8, 10) + "." + obj.DogumTarihi.substring(5, 7) + "." + obj.DogumTarihi.substring(0, 4)
+                    var FormatIseBaslama = obj.IseBaslamaTarihi.substring(8, 10) + "." + obj.IseBaslamaTarihi.substring(5, 7) + "." + obj.IseBaslamaTarihi.substring(0, 4);
+                    var list = $('#UploadedImage');
+                    list.find('img').remove();
+                    $("#personelAdSoyad").val(obj.PAdSoyad);
+                    $("#datepicker").val(Formatdogumtarihi);
+                    $("#EpostaAdresi").val(obj.EPosta);
+                    $("#phone").val(obj.CepNum);
+                    $("#IseBaslama").val(FormatIseBaslama);
+                    $("#Adres").val(obj.Adres);
+                    $('#id').val(KayitId)
+                    if (obj.FotoYol != null) {
+                        $("#UploadedImage").append('<img src="../Content/PersonelFoto/' + obj.FotoYol + '" class="rounded-circle z-depth-1-half avatar-pic"  id="uyeFoto" style="width: 150px;"/>');
+                    } else {
+                        $("#UploadedImage").append('<img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg" class="rounded-circle z-depth-1-half avatar-pic" id="uyeFoto" style="width: 150px;" />');
+                    }
+
+                }
+            })
+        }
+
+        $("#Foto").change(function () {
+            readURL(this);
+        });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#uyeFoto').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function Bilgi(KayitId) {
+            var url = "./PersonelRecord?KayitId=" + KayitId;
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                success: function (data) {
+                    var list = $('#BilgiImage');
+                    list.find('img').remove();
+                    obj = JSON.parse(data);
+                    var Formatdogumtarihi = obj.DogumTarihi.substring(8, 10) + "." + obj.DogumTarihi.substring(5, 7) + "." + obj.DogumTarihi.substring(0, 4)
+                    var FormatIseBaslama = obj.IseBaslamaTarihi.substring(8, 10) + "." + obj.IseBaslamaTarihi.substring(5, 7) + "." + obj.IseBaslamaTarihi.substring(0, 4);
+                    var adsoyad = obj.PAdSoyad;
+                    var Eposta = obj.EPosta;
+                    var CepNum = obj.CepNum;
+                    var DogumTarihi = Formatdogumtarihi;
+                    var IseBaslama = FormatIseBaslama;
+                    var adres = obj.Adres;
+                    var FotoPath = obj.FotoYol;
+                    $.each(obj, function (i, item) {
+                        document.getElementById("adsoyad").innerHTML = '<h3 class="mb-3 font-weight-bold">' + adsoyad + '</h3>';
+                        document.getElementById("PrsKimlik").innerHTML = '<li><strong>E-mail address:</strong> ' + Eposta + '</li>' + '<li><strong>Phone number:</strong> ' + CepNum + '</li>' + ' <li><strong>Doğum Tarihi:</strong> ' + DogumTarihi + '</li>' + '<li><strong>Adres:</strong> ' + adres + '</li>' + '<li><strong>Ise Baslama Tarihi:</strong> ' + IseBaslama + '</li>';
+                    });
+                    if (FotoPath != null) {
+                        $("#BilgiImage").append('<img src="../Content/PersonelFoto/' + FotoPath + '" class="rounded-circle"/>');
+                    } else {
+                        $("#BilgiImage").append('<img src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg" class="rounded-circle" />');
+                    }
+                }
+
+            })
+        }
+
+
+
+        $("#DetailsUpdate").click(function () {
+            var data = {
+                PAdSoyad: $('#personelAdSoyad').val(),
+                DogumTarihi: $("#datepicker").val(),
+                EPosta: $("#EpostaAdresi").val(),
+                CepNum: $("#phone").val(),
+                IseBaslamaTarihi: $("#IseBaslama").val(),
+                Adres: $("#Adres").val(),
+                KId: $('#id').val()
+            }
+            $.ajax({
+                type: "Post",
+                url: "./DetailsUpdate",
+                data: data,
+                success: function (result) {
+                    toastr["success"]("Kullanıcı Guncellendi")
+                    window.location.href = "./PersonelBilgileri";
+                    $("#myModal").modal("hide");
+                }
+            })
+        })
+
+        var UploadImage = function () {
+            var id = $("#id").val();
+            var file = $("#Foto").get(0).files;
+            var data = new FormData;
+            data.append("ImageFile", file[0]);
+            $.ajax({
+                type: "POST",
+                url: "./ImageUpload?id=" + id,
+                data: data,
+                dataType: "json",
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    toastr["success"]("Resim Güncellendi...");
+                }
+            })
+        }
+
+
+        $(document).on("click", ".sil", function () {
+            var id = $(this).attr("data-id");
+            $("#silId").val(id);
+            $("#silModal").modal();
+        });
+
+        $("#btnSil").click(function () {
+            var id = $("#silId").val();
+            $.ajax({
+                type: "POST",
+                url: "./PersonelSil",
+                data: { "id": id },
+                dataType: "json",
+                success: function (data) {
+                    // window.location.href = "/KodYazilim/PersonelListe";
+                    $("#silModal").modal("hide");
+                    window.location.href = "./PersonelBilgileri";
+                    //toastr["danger"]("Kullanıcı Silindi...");
+                }
+            });
+        });
+
+
+        $('#panel84').click(function () {
+            console.log("assf");
+
+        })
+
+
+
+        function myFunction() {
+  
+                var input, filter, table, tr, td, i;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("KayitliPersonel");
+                tr = table.getElementsByTagName("tr");
+                for (i = 0; i < tr.length; i++)
+                {
+                    td = tr[i].getElementsByTagName("th")[2];
+                    if (td)
+                    {
+                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
+                        {
+                            tr[i].style.display = "";
+                        }
+                        else
+                        {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+  
+
+
+    </script>
+
+
+</main>

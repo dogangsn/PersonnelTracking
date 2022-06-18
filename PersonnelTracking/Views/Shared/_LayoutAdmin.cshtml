@@ -1,0 +1,46 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Kod Yazılım Personel Takip - Admin</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/fonts/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/AdminTemplate/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/DesignTemplate-css/Loader.css" rel="stylesheet" />
+    <!-- Material Design Bootstrap -->
+    <link href="~/Content/AdminTemplate/mdb.min.css" rel="stylesheet" />
+    <script src="~/Content/AdminTemplate/jquery-3.2.1.min.js"></script>
+
+</head>
+<body class="fixed-sn white-skin">
+
+
+    @Html.Partial("_AdminHeader")
+
+    @RenderBody()
+  
+
+    <!--Footer-->
+    <footer>
+        <p style="text-align: center;">&copy; @DateTime.Now.Year - KOD YAZILIM</p>
+    </footer>
+    <!--/.Footer-->
+   
+    <script src="~/Content/AdminTemplate/popper.min.js"></script>
+    <script src="~/Content/AdminTemplate/bootstrap.min.js"></script>
+    <script src="~/Content/AdminTemplate/mdb.min.js"></script>
+
+    <script>
+        // SideNav Initialization
+        $(".button-collapse").sideNav();
+
+        new WOW().init();
+    </script>
+
+</body>
+</html>

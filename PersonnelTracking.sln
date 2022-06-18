@@ -1,0 +1,86 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kod_Yazilim_Personel", "Kod_Yazilim_Personel\Kod_Yazilim_Personel.csproj", "{6DB786A7-8AE4-43B1-82DE-CA421BD735A4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CB90A4B7-9E55-4F20-B82D-D15F0AB8D828} = {CB90A4B7-9E55-4F20-B82D-D15F0AB8D828}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SednaPersonel.DataAccess", "SednaPersonel.DataAccess\SednaPersonel.DataAccess.csproj", "{BBCBB820-24AE-4FFA-97C9-49CC3353F184}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SednaPersonel.Domain", "SednaPersonel.Domain\SednaPersonel.Domain.csproj", "{BDC9F2F5-47AB-4E86-A048-BE4BA4C8A3D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SednaPersonel.Models", "SednaPersonel.Models\SednaPersonel.Models.csproj", "{CB90A4B7-9E55-4F20-B82D-D15F0AB8D828}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SednaPersonel.Services", "SednaPersonel.Services\SednaPersonel.Services.csproj", "{42B9B4B9-73C2-4DA9-AEE5-E52351F816E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{E8CCDDED-D894-4708-8114-3CA2108E4648}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{0E59AA78-C672-426B-A83E-23C63096EEF6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{B2BB2BE9-5D15-42B0-88DA-F597A8C46AA7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SednaFace_Api", "SednaFace_Api\SednaFace_Api.csproj", "{60E60FBF-900C-485E-8A89-C128DA8A29C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SednaFace_Web", "SednaFace_Web\SednaFace_Web.csproj", "{E40BD2A8-F640-4F83-9145-20E9E34D8438}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SednaFace_WebApi", "SednaFace_WebApi\SednaFace_WebApi.csproj", "{4568E592-AD82-4F43-B6A6-24C7C4872B9F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6DB786A7-8AE4-43B1-82DE-CA421BD735A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DB786A7-8AE4-43B1-82DE-CA421BD735A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DB786A7-8AE4-43B1-82DE-CA421BD735A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DB786A7-8AE4-43B1-82DE-CA421BD735A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBCBB820-24AE-4FFA-97C9-49CC3353F184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBCBB820-24AE-4FFA-97C9-49CC3353F184}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBCBB820-24AE-4FFA-97C9-49CC3353F184}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBCBB820-24AE-4FFA-97C9-49CC3353F184}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDC9F2F5-47AB-4E86-A048-BE4BA4C8A3D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDC9F2F5-47AB-4E86-A048-BE4BA4C8A3D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDC9F2F5-47AB-4E86-A048-BE4BA4C8A3D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDC9F2F5-47AB-4E86-A048-BE4BA4C8A3D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB90A4B7-9E55-4F20-B82D-D15F0AB8D828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB90A4B7-9E55-4F20-B82D-D15F0AB8D828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB90A4B7-9E55-4F20-B82D-D15F0AB8D828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB90A4B7-9E55-4F20-B82D-D15F0AB8D828}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42B9B4B9-73C2-4DA9-AEE5-E52351F816E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42B9B4B9-73C2-4DA9-AEE5-E52351F816E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42B9B4B9-73C2-4DA9-AEE5-E52351F816E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42B9B4B9-73C2-4DA9-AEE5-E52351F816E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60E60FBF-900C-485E-8A89-C128DA8A29C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60E60FBF-900C-485E-8A89-C128DA8A29C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60E60FBF-900C-485E-8A89-C128DA8A29C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60E60FBF-900C-485E-8A89-C128DA8A29C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E40BD2A8-F640-4F83-9145-20E9E34D8438}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E40BD2A8-F640-4F83-9145-20E9E34D8438}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E40BD2A8-F640-4F83-9145-20E9E34D8438}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E40BD2A8-F640-4F83-9145-20E9E34D8438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4568E592-AD82-4F43-B6A6-24C7C4872B9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4568E592-AD82-4F43-B6A6-24C7C4872B9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4568E592-AD82-4F43-B6A6-24C7C4872B9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4568E592-AD82-4F43-B6A6-24C7C4872B9F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6DB786A7-8AE4-43B1-82DE-CA421BD735A4} = {E8CCDDED-D894-4708-8114-3CA2108E4648}
+		{BBCBB820-24AE-4FFA-97C9-49CC3353F184} = {0E59AA78-C672-426B-A83E-23C63096EEF6}
+		{BDC9F2F5-47AB-4E86-A048-BE4BA4C8A3D1} = {0E59AA78-C672-426B-A83E-23C63096EEF6}
+		{CB90A4B7-9E55-4F20-B82D-D15F0AB8D828} = {0E59AA78-C672-426B-A83E-23C63096EEF6}
+		{42B9B4B9-73C2-4DA9-AEE5-E52351F816E0} = {0E59AA78-C672-426B-A83E-23C63096EEF6}
+		{60E60FBF-900C-485E-8A89-C128DA8A29C4} = {B2BB2BE9-5D15-42B0-88DA-F597A8C46AA7}
+		{E40BD2A8-F640-4F83-9145-20E9E34D8438} = {E8CCDDED-D894-4708-8114-3CA2108E4648}
+		{4568E592-AD82-4F43-B6A6-24C7C4872B9F} = {B2BB2BE9-5D15-42B0-88DA-F597A8C46AA7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {59950B65-0B82-48A2-907C-F7E9C551BA5F}
+	EndGlobalSection
+EndGlobal

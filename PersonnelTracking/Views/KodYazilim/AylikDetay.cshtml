@@ -1,0 +1,249 @@
+﻿
+@{
+    ViewBag.Title = "AylikDetay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main>
+    <style>
+        .table-wrapper-2 {
+            display: block;
+            max-height: 405px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+        .scrollbar {
+            margin-left: 30px;
+            float: left;
+            height: 300px;
+            width: 65px;
+            background: #fff;
+            overflow-y: scroll;
+            margin-bottom: 25px;
+        }
+
+        .scrollbar-primary::-webkit-scrollbar {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        .scrollbar-primary::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+            background-color: #4285F4;
+        }
+    </style>
+    @*<button>@Html.ActionLink("Müşteri Listesi (PDF)","DetailsReport","Admin")</button>*@
+    <div id="loader-wrapper" style="display:none;">
+        <div id="loader"></div>
+    </div>
+    <div class="container-fluid text-center">
+        <div class="card card-cascade narrower">
+            <section>
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 mr-0">
+                        <div class="view gradient-card-header light-blue lighten-1">
+                            <h2 class="h2-responsive mb-0">Personele Göre Aylık Puantaj</h2>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <br />
+            <div class="col-md-4">
+                <div class="md-form">
+                   
+                    <label for="bday-month">Dönem Seçiniz</label>
+                    <input id="bday-month" type="month" name="bday-month" value="@DateTime.Now.ToString("yyyy-MM")">
+                    @*<label for="date-picker-example" class="active">Dönem Seçiniz</label>*@
+                </div>
+            </div>
+            <div class="row card-body pt-3">
+                <div class="row">
+                    <div class="col-md-8 col-lg-7 col-xl-9">
+                        <div class="col-md-4">
+                            <div class="md-form" style="width: 600px">
+                                <select class="mdb-select" id="personels">
+                                    <option value="" disabled selected></option>
+                                    @foreach (var item in Model)
+                                    {
+                                        <option value="@item.KId" data-icon="../Content/PersonelFoto/@item.FotoYol" class="rounded-circle">@item.PAdSoyad</option>
+                                    }
+                                </select>
+                                <label>Personel Seçiniz ...</label>
+                            </div>
+
+                            <button class="btn btn-success" id="KayitGetir">Kayıtları Getir</button>
+                            <hr /> <br />
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="text-align:center; display:none" id="PersonelAdSoyad">
+                        <h3 style="border: ridge;">Personel AdıSoyadı (Dep.)</h3>
+                        <hr />
+                    </div>
+
+                    @*<div class="col-lg-4" style="display:none" id="chartSablon">
+                            <div class="card">
+                                <div class="card-body">
+                                    <canvas id="pieChart"></canvas>
+                                </div>
+                            </div>
+                            <br />
+                        </div>*@
+
+                </div>
+            </div>
+            <div class="row mx-1">
+                <div class="col-lg-12 col-md-12 mb-4" style="display:none" id="TotalCalismas">
+                    <div class="card">
+                        <div class="view view-cascade gradient-card-header purple-gradient">
+                            <!-- Title -->
+                            <h2 class="card-header-title">Calisma Saatleri</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive" style="display:block;overflow-x:auto">
+                                <table class="table table-bordered table-striped" id="Kayitlars">
+                                    <thead>
+                                        <tr>
+                                            @*<th scope="col">#</th>
+                                                <th scope="col">Personel Adı Soyadı</th>*@
+                                            <th scope="col">1.Gün</th>
+                                            <th scope="col">2.Gün</th>
+                                            <th scope="col">3.Gün</th>
+                                            <th scope="col">4.Gün</th>
+                                            <th scope="col">5.Gün</th>
+                                            <th scope="col">6.Gün</th>
+                                            <th scope="col">7.Gün</th>
+                                            <th scope="col">8.Gün</th>
+                                            <th scope="col">9.Gün</th>
+                                            <th scope="col">10.Gün</th>
+                                            <th scope="col">11.Gün</th>
+                                            <th scope="col">12.Gün</th>
+                                            <th scope="col">13.Gün</th>
+                                            <th scope="col">14.Gün</th>
+                                            <th scope="col">15.Gün</th>
+                                            <th scope="col">16.Gün</th>
+                                            <th scope="col">17.Gün</th>
+                                            <th scope="col">18.Gün</th>
+                                            <th scope="col">19.Gün</th>
+                                            <th scope="col">20.Gün</th>
+                                            <th scope="col">21.Gün</th>
+                                            <th scope="col">22.Gün</th>
+                                            <th scope="col">23.Gün</th>
+                                            <th scope="col">24.Gün</th>
+                                            <th scope="col">25.Gün</th>
+                                            <th scope="col">26.Gün</th>
+                                            <th scope="col">27.Gün</th>
+                                            <th scope="col">28.Gün</th>
+                                            <th scope="col">29.Gün</th>
+                                            <th scope="col">30.Gün</th>
+                                            <th scope="col">31.Gün</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            @*<th scope="row">1</th>
+                                                <td>-</td>*@
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr />
+                            <div style="text-align: right;">
+                                <p style="text-align: right;" id="totalCalisma">Total Calışma Zamanı : <strong> 0s:00dk</strong></p>
+                                <p style="text-align: right;" id="TotalMola">Total Mola Zamanı : <strong> 0s:00dk</strong></p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <script>
+        var PId = 0;
+        $(document).ready(function () {
+            $('.mdb-select').material_select();
+            $("#personels").change(function () {
+                PId = $(this).val();
+            });
+
+        });
+
+        $('#KayitGetir').click(function () {
+            if (PId == 0) {
+                toastr["error"]("Er:Personel Seçiniz...");
+            } else {
+                $("#loader-wrapper").show();
+                var donem = $('#bday-month').val();
+                var donem = $('#bday-month').val();
+                var puantaj = [];
+                $.ajax({
+                    type: "GET",
+                    url: "./AylikTotalCalisma?donem=" + donem + "&id=" + PId,
+                    success: function (data) {
+                        data = JSON.parse(JSON.parse(JSON.stringify(data)));
+                        $("#loader-wrapper").hide();
+                        $('#TotalCalismas').show();
+                        document.getElementById("TotalMola").innerHTML = "Total Çalışma Zamanı :<strong>0 dk</strong>";
+                        document.getElementById("totalCalisma").innerHTML = "Total Mola Zamanı :<strong>0 dk</strong>";
+                        var list = $('#Kayitlars tbody');
+                        list.find('tbody tr').remove();
+                        list.find('tbody th').remove();
+                        list.find('div').remove();
+                        var rows;
+                        $.each(data, (i, item) => {
+                            rows += "<tr>";
+                            $.each(item.MonthTime, function (key, value) {
+                                if (value.CalismaZamani == "00s:00dk" || value.CalismaZamani == undefined) {
+                                    rows += "<td>-</td>"
+                                } else {
+                                    rows += "<td>" + value.CalismaZamani + "</td>";
+                                } 
+                            });
+                            rows += "</tr>";
+                            document.getElementById("totalCalisma").innerHTML = "Total Çalışma Zamanı :<strong> " + item.TotalAylikCalisma + "</strong>";
+                            document.getElementById("TotalMola").innerHTML = "Total Mola Zamanı :<strong> " + item.TotalAylikMola + "</strong>";
+                        })
+                        $('#Kayitlars tbody').html(rows);
+                    }
+                })
+            }
+        })
+    </script>
+</main>

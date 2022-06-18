@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.9" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.9" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ADODB">
+      <HintPath>..\..\SednaFace\SednaFace\bin\Debug\ADODB.dll</HintPath>
+    </Reference>
+    <Reference Include="AxInterop.AXIMAGELib">
+      <HintPath>..\..\SednaFace\SednaFace\bin\Debug\AxInterop.AXIMAGELib.dll</HintPath>
+    </Reference>
+    <Reference Include="EnvDTE">
+      <HintPath>..\..\SednaFace\SednaFace\bin\Debug\EnvDTE.dll</HintPath>
+    </Reference>
+    <Reference Include="EnvDTE80">
+      <HintPath>..\..\SednaFace\SednaFace\bin\Debug\EnvDTE80.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.AXIMAGELib">
+      <HintPath>..\..\SednaFace\SednaFace\bin\Debug\Interop.AXIMAGELib.dll</HintPath>
+    </Reference>
+    <Reference Include="VSLangProj">
+      <HintPath>..\..\SednaFace\SednaFace\bin\Debug\VSLangProj.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+
+</Project>

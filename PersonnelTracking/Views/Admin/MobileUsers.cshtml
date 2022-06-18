@@ -1,0 +1,118 @@
+﻿@model IEnumerable<Kod_Yazilim_Personel.App_Data.KayitliPersonel>
+@{
+    ViewBag.Title = "MobileUsers";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<main>
+    <h2>MobileUsers</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-hover table-responsive-md table-fixed">
+                <thead>
+                    <tr>
+                        <th>PAdSoyad</th>
+                        <th>KullanıcıAdı</th>
+                        <th>Password</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var login in Model)
+                    {
+                        <tr>
+                            <td>@login.PAdSoyad</td>
+                            <td>@login.EPosta</td>
+                            <td>******</td>
+                            <td>
+                                <a class="btn btn-outline-info btn-rounded waves-effect" data-toggle="tooltip" data-placement="top" title="Edit" onclick="KullaniciEdit(@login.KId)"><i class="fa fa-pencil"></i></a>
+                                @*<a class="btn btn-outline-danger btn-rounded waves-effect sil" data-toggle="tooltip" data-placement="top" title="Remove" data-id=""></a>*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="kullaniciEdit" tabindex="-1" role="dialog" aria-labelledby="personelModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="personelModalLabe2"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="md-form" style="margin-left:2.5rem;">
+                        <input type="hidden" id="id" class="form-control">
+                        <input type="text" id="UserNameEdit" class="form-control" style="width: 281px;">
+                        <label for="form1">Kullanıcı Adı</label>
+                    </div>
+                    <div class="md-form" style="margin-left:2.5rem;">
+                        <input type="password" id="UserPswEdit" class="form-control" style="width: 281px;">
+                        <label for="form1">Parola</label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="UpdateUser">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        function KullaniciEdit(kId) {
+            console.log(kId);
+            $("#kullaniciEdit").modal();
+            $("#UserNameEdit").trigger("focusin");
+            $("#UserPswEdit").trigger("focusin");
+
+            $.ajax({
+                type: "MobileUser",
+                url: url,
+                success: function (data) { 
+                    var obj = JSON.parse(data);
+                    $("#UserNameEdit").val(obj.KAdi);
+                    $("#UserPswEdit").val(obj.Sifre);
+                }
+            });
+
+            $("#id").val(kId);
+        }
+
+
+        $("#UpdateUser").click(function () { 
+        
+            var data = {
+                Eposta: $('#UserNameEdit').val(),
+                MobilePass: $('#UserPswEdit').val(),
+                kId :  $('#id').val()
+            }
+            $.ajax({
+                type: "Post",
+                url: "./UpdateMobileUser",
+                data: data,
+                success: function (result) {
+                    toastr["success"]("Kullanıcı Guncellendi...")
+                    window.location.href = "./Kullanicilar";
+                    $("#kullaniciEdit").modal("hide");
+                }
+            })
+        
+        });
+
+
+
+    </script>
+
+
+</main>

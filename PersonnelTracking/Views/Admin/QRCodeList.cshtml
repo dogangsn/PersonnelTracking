@@ -1,0 +1,65 @@
+﻿@model IEnumerable < Kod_Yazilim_Personel.App_Data.KayitliPersonel>
+@{
+    ViewBag.Title = "QRCodeList";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<main>
+
+    <h2>QR Code Listesi</h2>
+    <hr />
+
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-hover table-responsive-md table-fixed">
+                <thead>
+                    <tr>
+                        <th>Personel Adı Soyadı</th>
+                        <th>Kullanıcı Adı</th>
+                        <th> QR Kodu Var mı?</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var login in Model)
+                    {
+                        <tr>
+                            <td>@login.PAdSoyad</td>
+                            <td>@login.EPosta</td>
+                            <td>
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </td>
+                            <td>
+                                @if (login.QRPath != "")
+                                {
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-info btn-rounded waves-effect" data-toggle="tooltip" data-placement="top" title="Edit" onclick="KullaniciQr(@login.KId)"><i class="fa fa-pencil"></i></a>
+                                @*<a class="btn btn-outline-danger btn-rounded waves-effect sil" data-toggle="tooltip" data-placement="top" title="Remove" data-id="@login.Id"><i class="fa fa-times"></i></a>*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script>
+
+        function KullaniciQr(KId) {
+
+
+        }
+
+
+
+    </script>
+
+
+</main>
+
+

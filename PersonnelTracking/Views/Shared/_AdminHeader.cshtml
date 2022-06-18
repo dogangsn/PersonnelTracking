@@ -1,0 +1,186 @@
+﻿<header>
+    <!-- Sidebar navigation -->
+    <div id="slide-out" class="side-nav sn-bg-4 fixed" style="transform: translateX(0px);">
+        <ul class="custom-scrollbar">
+            <!-- Logo -->
+            <li>
+                <div class="logo-wrapper waves-light waves-effect waves-light">
+                    <a href="">
+                        <img src="~/Content/logo.png" class="img-fluid flex-center" style="padding: 2% 0px;">
+                    </a>
+                </div>
+            </li>
+            <!--/. Logo -->
+            <!--Social-->
+            <li>
+                <ul class="social">
+                    <li>
+                        <a href="" class="icons-sm fb-ic">
+                            <i class="fa fa-facebook"> </i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="icons-sm pin-ic">
+                            <i class="fa fa-pinterest"> </i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="icons-sm gplus-ic">
+                            <i class="fa fa-google-plus"> </i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="icons-sm tw-ic">
+                            <i class="fa fa-twitter"> </i>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!--/Social-->
+            <!--Search Form-->
+            <li>
+                <form class="search-form" role="search">
+                    <div class="form-group md-form mt-0 pt-1 waves-light waves-effect waves-light">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                </form>
+            </li>
+            <!--/.Search Form-->
+            <!-- Side navigation links -->
+            <li>
+                <ul class="collapsible collapsible-accordion">
+                    <li>
+                        <a href="~/Admin/Index" class="collapsible-header waves-effect arrow-r">
+                            <i class="fa fa-chevron-right"></i> Ana Sayfa
+                        </a>
+                    </li>
+                    <li>
+                        <a class="collapsible-header waves-effect arrow-r">
+                            <i class="fa fa-hand-pointer-o"></i> Personel
+                            <i class="fa fa-angle-down rotate-icon"></i>
+                        </a>
+                        <div class="collapsible-body">
+                            <ul class="list-unstyled">
+                                @*<li>
+                        <a href="~/Admin/PersonelCalistigiZaman" class="waves-effect">Günlük Çalışma Saatleri</a>
+                    </li>*@
+                                <li>
+                                    <a href="~/Admin/HaftalikGirisCikis" class="waves-effect">Haftalık Giriş-Çıkış Listesi</a>
+                                </li>
+                                @*<li>
+                        <a href="~/Admin/SalaryCalculator" class="waves-effect">Bordro Hesaplama</a>
+                    </li>*@
+
+                                <li>
+                                    <a href="~/Admin/AylikPuantaj" class="waves-effect">Aylık Puantaj Bilgisi</a>
+                                </li>
+                                <li>
+                                    <a href="~/Admin/PersonelAylikSorgulama" class="waves-effect">Personele Göre Aylık Puantaj</a>
+                                </li>
+                                <li>
+                                    <a href="~/Admin/PersonelMusteri" class="waves-effect">Personel Müşteri Çıkışları</a>
+                                </li>
+                                <li>
+                                    <a href="~/Admin/PersonelBilgileri" class="waves-effect">Personel Bilgileri</a>
+                                </li>
+                                @*<li>
+                        <a href="~/Admin/KaydiSilinenPersonel" class="waves-effect">Kaydı Silinen Personeller</a>
+                    </li>*@
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="collapsible-header waves-effect arrow-r">
+                            <i class="fa fa-hand-pointer-o"></i> Mobil Personel
+                            <i class="fa fa-angle-down rotate-icon"></i>
+                        </a>
+                        <div class="collapsible-body">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="~/Admin/MobileUsers" class="waves-effect">Mobil User </a>
+                                </li>
+                                <li>
+                                    <a href="~/Admin/QRCodeList" class="waves-effect">QR Kodu </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="collapsible-header waves-effect arrow-r">
+                            <i class="fa fa-hand-pointer-o"></i> Kullanıcı
+                            <i class="fa fa-angle-down rotate-icon"></i>
+                        </a>
+                        <div class="collapsible-body">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="~/Admin/Kullanicilar" class="waves-effect">Kullanıcılar ve Yetkileri</a>
+                                </li>
+                                <li>
+                                    <a href="" class="waves-effect">Duyurular</a>
+                                </li>
+                                <li>
+                                    <a href="~/Admin/SayfaYonetimi" class="waves-effect">Sayfa Izinleri</a>
+                                </li>
+                                <li>
+                                    <a href="~/Admin/Log" class="waves-effect">Log Kayıtları</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="collapsible-header waves-effect arrow-r">
+                            <i class="fa fa-hand-pointer-o"></i> Sedna Face
+                            <i class="fa fa-angle-down rotate-icon"></i>
+                        </a>
+                        <div class="collapsible-body">
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="" class="waves-effect">Cihaz İşlemleri</a>
+                                </li>
+                                <li>
+                                    <a href="" class="waves-effect">Bilgileri Aktar</a>
+                                </li>
+                                <li>
+                                    <a href="" class="waves-effect">Personel İşlemleri</a>
+                                </li>
+                                <li>
+                                    <a href="~/Admin/MobileUsers" class="waves-effect">Parametreler</a>
+                                </li>
+                            </ul>
+                       </div>
+                    </li>
+                    <li>
+                        <a href="~/KodYazilim/PersonelGirisCikis" class="collapsible-header waves-effect arrow-r">
+                            <i class="fa fa-chevron-right"></i> User Sayfaya Dön
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Admin/Help" class="collapsible-header waves-effect arrow-r">
+                            <i class="fa fa-info"></i> Yardım
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!--/. Side navigation links -->
+        </ul>
+        <div class="sidenav-bg mask-strong"></div>
+    </div>
+    <!--/. Sidebar navigation -->
+    <!-- Navbar -->
+    <nav class="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav">
+        <!-- SideNav slide-out button -->
+        <div class="float-left">
+            <a href="" data-activates="slide-out" class="button-collapse black-text">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+        <!-- Breadcrumb-->
+        <div class="breadcrumb-dn mr-auto">
+            <p>Kod Yazılım Personel Takip Admin Paneli</p>
+        </div>
+        <a class="nav-link  waves-effect waves-light">
+            <i class="fa fa-user" aria-hidden="true"></i>  @Session["uyeKadi"].ToString()
+        </a>
+    </nav>
+    <!-- /.Navbar -->
+</header>
