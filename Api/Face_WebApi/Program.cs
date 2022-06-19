@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace SednaFace_WebApi
+namespace Face_WebApi
 {
     public class Program
     {

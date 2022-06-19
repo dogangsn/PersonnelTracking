@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace SednaFace_Web.Pages
+namespace Face_Web.Pages
 {
     public class PrivacyModel : PageModel
     {

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Face_WebApi;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace SednaFace_WebApi.Controllers
+namespace Face_WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]

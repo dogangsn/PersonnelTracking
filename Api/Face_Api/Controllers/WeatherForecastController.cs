@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace SednaFace_Api.Controllers
+namespace Face_Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

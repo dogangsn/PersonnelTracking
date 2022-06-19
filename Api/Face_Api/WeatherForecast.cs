@@ -1,6 +1,6 @@
 using System;
 
-namespace SednaFace_Api
+namespace Face_Api
 {
     public class WeatherForecast
     {

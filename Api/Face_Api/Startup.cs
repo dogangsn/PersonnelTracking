@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Hangfire;
 using Hangfire.SqlServer;
 
-namespace SednaFace_Api
+namespace Face_Api
 {
     public class Startup
     {
@@ -40,7 +40,7 @@ namespace SednaFace_Api
                 UseRecommendedIsolationLevel = true,
                 UsePageLocksOnDequeue = true,
                 DisableGlobalLocks = true
-            })) ;
+            }));
 
             services.AddHangfireServer();
 
@@ -48,7 +48,7 @@ namespace SednaFace_Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IBackgroundJobClient backgroundJob  , IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IBackgroundJobClient backgroundJob, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
