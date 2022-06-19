@@ -1,0 +1,1000 @@
+﻿@model IEnumerable<PersonnelTracking.ViewModel.KayitliPersonelModel>
+
+@*@model PersonnelTracking.ViewModel.HaretlerAndKayitliPersonel*@
+@{
+    ViewBag.Title = "PersonelGirisCikis";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main>
+    <style>
+        .table-wrapper-2 {
+            display: block;
+            max-height: 329px;
+            overflow-y: auto;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+        .scrollbar {
+            margin-left: 30px;
+            float: left;
+            height: 300px;
+            width: 65px;
+            background: #fff;
+            overflow-y: scroll;
+            margin-bottom: 25px;
+        }
+
+        .scrollbar-primary::-webkit-scrollbar {
+            width: 12px;
+            background-color: #F5F5F5;
+        }
+
+        .scrollbar-primary::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+            background-color: #4285F4;
+        }
+    </style>
+
+    <div id="loader-wrapper" style="display:none;">
+        <div id="loader"></div>
+    </div>
+    <div class="container-fluid mt-5" style="margin-top: 0rem!important;">
+        <div class="card p-2 mb-5" ng-init="0" ng-style="Method(result)">
+            <div class="row">
+                <div class="col-lg-3 col-md-12">
+                    <div class="md-form">
+                        <input placeholder="@DateTime.Now.ToShortDateString()" type="date" id="datepicker" data-date-format="DD MMM YYYY" class="form-control datepicker" style="margin-left: 30px; width:150px;" data-value="2018/06/04">
+                    </div>
+                </div>
+                <div class="col-lg-8 col-md-7" style="padding-top: 10px; padding-right: 2px;">
+                    <form class="form-inline mt-2 ml-2 float-right">
+                        <input class="form-control my-0 py-0" type="text" placeholder="Ad Soyad Arama" style="max-width: 150px;" id="myInput" onkeyup="myFunction()">
+                        <button class="btn btn-sm btn-primary ml-2 px-1"><i class="fa fa-search"></i>  </button>
+                        @*@if (Session["uyeTuru"].ToString() == "1" || Session["uyeTuru"].ToString() == "0")
+                            {
+                                <div>
+                                    <button type="button" class="btn btn-outline-primary waves-effect">Bilgi Aktar</button>
+                                </div>
+                            }*@
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown">
+            <a class="btn btn-default dropdown-toggle disabled" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Personel Kayıt Gir
+            </a>
+            <div class="dropdown-menu" hidden>
+                <form class="px-4 py-3">
+                    <div class="form-group">
+                        <label for="exampleDropdownFormEmail1">Kart ID</label>
+                        <input type="text" class="form-control" id="KartId" placeholder="Orn;1A:21:22:A5">
+                    </div>
+                    <button class="btn btn-primary" id="KartIdKaydet">Kayit</button>
+                </form>
+            </div>
+
+            @if (Session["uyeTuru"].ToString() == "1" || Session["uyeTuru"].ToString() == "0")
+            {
+                <button class="btn btn-success float-right" onclick="tableToExcel('GenelKayit', 'W3C Example Table')"><i class="fa fa-file-excel-o" aria-hidden="true"></i>  Excel'e Aktar</button>
+            }
+            @*<input type="button" onclick="tableToExcel('GenelKayit', 'W3C Example Table')" value="Export to Excel">*@
+        </div>
+
+
+
+        <br /><br />
+        <div class="card card-cascade narrower">
+            <div class="view gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+                <div>
+                </div>
+                <a href="" class="white-text mx-3">KOD YAZILIM</a>
+                <div>
+                </div>
+            </div>
+            <div class="px-4">
+                <table class="table table-striped" id="GenelKayit">
+                    <thead>
+                        <tr>
+
+                            @if (Session["uyeTuru"].ToString() == "1")
+                            {
+                                <th>#</th>
+                                <th onclick="sortTable(1)" style="cursor: pointer;">KartID<i class="fa fa-sort ml-1"></i></th>
+                                <th onclick="sortTable(2)" style="cursor: pointer;">Ad Soyad<i class="fa fa-sort ml-1"></i></th>
+                                <th onclick="sortTable(3)" style="cursor: pointer;">Giriş Saati<i class="fa fa-sort ml-1"></i></th>
+                                <th onclick="sortTable(4)" style="cursor: pointer;">Çıkış Saati<i class="fa fa-sort ml-1"></i></th>
+                                <th onclick="sortTable(5)" style="cursor: pointer;">Çalışma Saati<i class="fa fa-sort ml-1"></i></th>
+                                <th onclick="sortTable(6)" style="cursor: pointer;">Mola Saati<i class="fa fa-sort ml-1"></i></th>
+                                <th onclick="sortTable(7)" style="cursor: pointer;">Durumu<i class="fa fa-sort ml-1"></i></th>
+                                <th>Müşteri Bilgisi</th>
+                                <th>Acıklama</th>
+                                <th>Detay</th>
+                            }
+                            else
+                            {
+                                <th>#</th>
+                                <th onclick="sortTable(1)" style="cursor: pointer;">Ad Soyad<i class="fa fa-sort ml-1"></i></th>
+                                <th onclick="sortTable(2)" style="cursor: pointer;">Giriş Saati<i class="fa fa-sort ml-1"></i></th>
+                                <th onclick="sortTable(3)" style="cursor: pointer;">Çıkış Saati<i class="fa fa-sort ml-1"></i></th>
+                                <th onclick="sortTable(4)" style="cursor: pointer;">Çalışma Saati<i class="fa fa-sort ml-1"></i></th>
+                                <th onclick="sortTable(5)" style="cursor: pointer;">Mola Saati<i class="fa fa-sort ml-1"></i></th>
+                                <th onclick="sortTable(6)" style="cursor: pointer;">Durumu<i class="fa fa-sort ml-1"></i></th>
+                                <th>Müşteri Bilgisi</th>
+                                <th>Acıklama</th>
+                                <th>Detay</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var kytPrs in Model)
+                        {
+                            <tr>
+
+                                @if (Session["uyeTuru"].ToString() == "1")
+                                {
+                                    <td>#</td>
+                                    <td>@kytPrs.KartID</td>
+                                    <td>@kytPrs.PAdSoyad</td>
+                                    try
+                                    {
+                                        <td>@(kytPrs.Hareketler.Where(p => p.Islem == "Giris     " && (p.SehirDisi == null || p.SehirDisi == false)).FirstOrDefault().Tarih.ToString("HH:mm"))</td>
+                                    }
+                                    catch (Exception)
+                                    {
+                                    }
+
+                                    try
+                                    {
+                                        <td>@(kytPrs.Hareketler.OrderByDescending(p => p.Tarih).Where(p => p.Islem == "Cikis     ").FirstOrDefault().Tarih.ToString("HH:mm"))</td>
+                                    }
+                                    catch (Exception)
+                                    {
+                                    }
+                                    <td><strong>@(kytPrs.TotalCalisma)</strong></td>
+                                    <td>@(kytPrs.TotalMola)</td>
+
+
+                                    if (kytPrs.Islem == "DIŞARDA")
+                                    {
+                                        <td style="color: #f96464;">@kytPrs.Islem</td>
+                                    }
+                                    else if (kytPrs.Islem == "GELMEDİ")
+                                    {
+                                        <td style="color: #fd0000;">@kytPrs.Islem</td>
+                                    }
+                                    else if (kytPrs.Islem == "MÜŞTERİDE")
+                                    {
+                                        <td style="color: #686bef;">@kytPrs.Islem</td>
+                                    }
+                                    else if (kytPrs.Islem == "İÇERDE")
+                                    {
+                                        <td style="color: #21e021;">@kytPrs.Islem</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="color: #ff8d00;">@kytPrs.Islem</td>
+                                    }
+                                    try
+                                    {
+                                        <td>@kytPrs.MusteriBİlgisi</td>
+                                    }
+                                    catch (Exception)
+                                    {
+                                    }
+                                    try
+                                    {
+                                        <td>@(kytPrs.Note)</td>
+                                        @*<td>@(kytPrs.Notlar.OrderByDescending(s => s.id).Where(s => s.KayitId == kytPrs.KId && s.Tarih.Value.Day == DateTime.Now.Day && s.Tarih.Value.Month == DateTime.Now.Month && s.Tarih.Value.Year == DateTime.Now.Year).FirstOrDefault().Not.ToString()) </td>*@
+                                    }
+                                    catch (Exception) { }
+                                    <td><a href="#" class="btn btn-outline-info btn-rounded waves-effect" onclick="PersonelRecord('@kytPrs.KId', '@kytPrs.PAdSoyad')"><i class="fa fa-info-circle"></i>  DETAY</a></td>
+                                }
+                                else
+                                {
+                                    <td>#</td>
+                                    <td>@kytPrs.PAdSoyad</td>
+                                    try
+                                    {
+                                        <td>@(kytPrs.Hareketler.Where(p => p.Islem == "Giris     ").FirstOrDefault().Tarih.ToString("HH:mm"))</td>
+
+                                    }
+                                    catch (Exception)
+                                    {
+                                    }
+
+                                    try
+                                    {
+                                        <td>@(kytPrs.Hareketler.OrderByDescending(p => p.Tarih).Where(p => p.Islem == "Cikis     ").FirstOrDefault().Tarih.ToString("HH:mm"))</td>
+                                    }
+                                    catch (Exception)
+                                    {
+                                    }
+                                    <td><strong>@(kytPrs.TotalCalisma)</strong></td>
+                                    <td>@(kytPrs.TotalMola)</td>
+
+
+                                    if (kytPrs.Islem == "DIŞARDA")
+                                    {
+                                        <td style="color: #f96464;">@kytPrs.Islem</td>
+                                    }
+                                    else if (kytPrs.Islem == "GELMEDİ")
+                                    {
+                                        <td style="color: #fd0000;">@kytPrs.Islem</td>
+                                    }
+                                    else if (kytPrs.Islem == "MÜŞTERİDE")
+                                    {
+                                        <td style="color: #686bef;">@kytPrs.Islem</td>
+                                    }
+                                    else if (kytPrs.Islem == "İÇERDE")
+                                    {
+                                        <td style="color: #21e021;">@kytPrs.Islem</td>
+                                    }
+                                    else
+                                    {
+                                        <td style="color: #ff8d00;">@kytPrs.Islem</td>
+                                    }
+                                    try
+                                    {
+                                        <td>@kytPrs.MusteriBİlgisi</td>
+                                    }
+                                    catch (Exception)
+                                    {
+                                    }
+                                    try
+                                    {
+                                        <td>@(kytPrs.Note)</td>
+                                        @*<td>@(kytPrs.Notlar.OrderByDescending(s => s.id).Where(s => s.KayitId == kytPrs.KId && s.Tarih.Value.Day == DateTime.Now.Day && s.Tarih.Value.Month == DateTime.Now.Month && s.Tarih.Value.Year == DateTime.Now.Year).FirstOrDefault().Not.ToString()) </td>*@
+                                    }
+                                    catch (Exception) { }
+                                    <td><a href="#" class="btn btn-outline-info btn-rounded waves-effect" onclick="PersonelRecord('@kytPrs.KId', '@kytPrs.PAdSoyad')"><i class="fa fa-info-circle"></i>  DETAY</a></td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+</main>
+
+<div class="modal fade" id="TotalGirisler" tabindex="-1" role="dialog" aria-labelledby="KayitLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="id" class="form-control">
+                <form>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-wrapper-2 scrollbar-primary">
+                                <table class="table table-responsive-md mb-0" id="kayit">
+                                    <thead class="cyan lighten-3">
+                                        <tr>
+                                            <td>#</td>
+                                            <td>Saat</td>
+                                            <td>İşlem Tipi</td>
+                                            <td>Dakika</td>
+                                            @if (Session["uyeTuru"].ToString() == "1" || Session["uyeTuru"].ToString() == "0")
+                                            {
+                                                <td>Check</td>
+                                            }
+                                            @if (Session["uyeTuru"].ToString() == "1")
+                                            {
+                                                <td>Sil</td>
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            @if (Session["uyeTuru"].ToString() == "1" || Session["uyeTuru"].ToString() == "0")
+                                            {
+                                                <td></td>
+                                            }
+                                            @if (Session["uyeTuru"].ToString() == "1")
+                                            {
+                                                <td></td>
+                                            }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <hr class="mb-3">
+                @*<p style="text-align: right;padding-right: 40px;" id="totalMola">Toplam Mola Suresi :<strong>0 dk</strong></p>
+                    <p style="text-align: right;padding-right: 40px;" id="totalCalisma">Total Çalışma Zamanı :<strong>0 dk</strong></p>*@
+                <div class="row">
+                    <div class="col-md-4">
+
+                    </div>
+                    <div class="col-md-4">
+                        <canvas id="doughnutChart"></canvas>
+                    </div>
+                    <div class="col-md-4" style="text-align: right;padding-right: 19px;">
+                        <p style="text-align: right;padding-right: 40px;" id="totalMola">Toplam Mola Suresi :<strong>0 dk</strong></p>
+                        <p style="text-align: right;padding-right: 40px;" id="totalCalisma">Total Çalışma Zamanı :<strong>0 dk</strong></p>
+                    </div>
+
+                </div>
+                <hr class="mb-3">
+
+                <div class="form-check" style="text-align:right">
+                    <input type="checkbox" class="form-check-input" id="Nobet">
+                    <label class="form-check-label" for="materialUnchecked">Nöbet</label>
+                </div>
+                <div class="switch" style="text-align:right">
+                    <label>
+                        Şehir Dışında
+                        <input type="checkbox" @*checked="checked"*@ id="checkSehirDisi">
+                        <span class="lever"></span>
+                    </label>
+                </div>
+
+                <hr class="mb-3">
+                <div class="row text-center">
+                    <div class="col-lg-5 col-md-12 mb-4">
+                        <div class="md-form">
+                            <textarea id="notSave" class="form-control md-textarea" length="120" rows="3"></textarea>
+                            <label for="textarea-char-counter">Açıklama Giriniz :</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-sm " id="aciklamatable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Açıklamalar</th>
+                                            <th style="text-align: center;">Sil</th>
+                                            <th style="text-align: center;">Düzenle</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary active" data-dismiss="modal">Close</button>
+                    @if (Session["uyeTuru"].ToString() == "1" || Session["uyeTuru"].ToString() == "0")
+                    {
+                        <button type="button" class="btn btn-primary" id="SaveAddNote">Açıklama Kaydet</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal: modalConfirmDelete-->
+<div class="modal fade" id="silModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+        <!--Content-->
+        <div class="modal-content text-center">
+            <!--Header-->
+            <div class="modal-header d-flex justify-content-center">
+                <p class="heading">Emin misiniz?</p>
+            </div>
+
+            <!--Body-->
+            <div class="modal-body">
+                <i class="fa fa-times fa-4x animated rotateIn"></i>
+                <input type="hidden" id="silId" />
+            </div>
+            <!--Footer-->
+            <div class="modal-footer flex-center">
+                <a type="button" class="btn btn-danger" id="btnSil">Kaydı Sil</a>
+                <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<!--Modal: modalConfirmDelete-->
+
+
+<div class="modal fade" id="musteriModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+    <!-- Change class .modal-sm to change the size of the modal -->
+    <div class="modal-dialog modal-sm" role="document">
+
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="myModalLabel">Müşeri Bilgisi</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="md-form">
+                    <input type="text" id="musteriBilgisi" class="form-control">
+                    <label for="form1">Nereye Gidiyor ?</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" id="vazgec">Vazgeç</button>
+                <button type="button" class="btn btn-primary btn-sm" id="MusteriKaydet">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+<script>
+
+    var result = [];
+
+    var CalismaZaman = [];
+    var MolaZaman = [];
+    var satirSayisi = 0;
+
+    var Notid = 0;
+    $(document).ready(function () {
+        MolaZaman = [];
+        CalismaZaman = [];
+        document.getElementById("checkSehirDisi").disabled = true;
+
+        $('.mdb-select').material_select();
+        $('.datepicker').pickadate({
+            monthsFull: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+            monthsShort: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Aug', 'Eyl', 'Eki', 'Kas', 'Ara'],
+            weekdaysFull: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+            weekdaysShort: ['Pzr', 'Pzt', 'Sal', 'Car', 'Per', 'Cum', 'Cmt'],
+            today: 'Bugün',
+            clear: 'Temizle',
+            close: 'Kapat',
+            labelMonthNext: 'Sonraki Ay',
+            labelMonthPrev: 'Önceki Ay',
+            labelMonthSelect: 'Ay Seçiniz',
+            labelYearSelect: 'Yıl Seçiniz',
+            format: 'dd.mm.yyyy',
+            firstDay: 1
+        });
+        $('.datepicker').change(() => {
+            Notid = 0;
+            let date = $('.datepicker').val();
+            $("#loader-wrapper").show();
+            $.ajax({
+                type: 'get',
+                url: './GetDateGirisCikisFilitre?date=' + date,
+                success: (data) => {
+                    $("#loader-wrapper").hide();
+                    data = JSON.parse(JSON.parse(JSON.stringify(data)));
+                    console.log(data);
+                    var list = $('#GenelKayit body');
+                    list.find('tbody tr').remove();
+                    list.find('tbody th').remove();
+                    list.find('div').remove();
+                    var veri = new Array(data);
+                    console.log(veri)
+                    var rows;
+                    var fn = "";
+                    var girisSaati = "";
+                    $.each(data, (i, item) => {
+                        fn = "PersonelRecord(\"" + item.KId + "\",\"" + item.PAdSoyad + "\")";
+                        girisSaati = item.Hareketler[0] != null ? item.Hareketler[0].Tarih.split("T")[1].substr(0, 5) : '' ? item.Hareketler[0].Islem == 'Giris     ' : '';
+                        if (@Session["uyeTuru"].ToString() == "1") {
+                            rows += "<tr>" +
+                            "<td>" + "#" + "</td>" +
+                            "<td>" + item.KartID + "</td>" +
+                            "<td>" + item.PAdSoyad + "</td>" +
+                            "<td>" + girisSaati + "</td>" +
+                            "<td>" + (item.Hareketler[1] != null ? item.Hareketler[item.Hareketler.length - 1].Tarih.split("T")[1].substr(0, 5) : '' ? item.Hareketler[item.Hareketler.length - 1].Islem != 'Cikis     ' : '') + "</td>" +
+                            "<td><strong>" + item.TotalCalisma + "</strong></td>" +
+                            "<td>" + item.TotalMola + "</td>" +
+
+                            "<td style='color: #ff8d00;'>" + item.Islem + "</td>" +
+                            "<td>" + (item.Note != null ? item.Note : '') + "</td>" +
+                            "<td></td>" +
+                            "<td>" + "<a href='#' class='btn btn-outline-info btn-rounded waves-effect' onclick='" + fn + "'><i class='fa fa-info-circle'></i>  DETAY</a>" + "</td>" +
+                        "</tr>";
+                        }else {
+                            rows += "<tr>" +
+                              "<td>" + "#" + "</td>" +
+                              "<td>" + item.PAdSoyad + "</td>" +
+                              "<td>" + girisSaati + "</td>" +
+                              "<td>" + (item.Hareketler[1] != null ? item.Hareketler[item.Hareketler.length - 1].Tarih.split("T")[1].substr(0, 5) : '' ? item.Hareketler[item.Hareketler.length - 1].Islem != 'Cikis     ' : '') + "</td>" +
+                              "<td><strong>" + item.TotalCalisma + "</strong></td>" +
+                              "<td>" + item.TotalMola + "</td>" +
+
+                              "<td style='color: #ff8d00;'>" + item.Islem + "</td>" +
+                              "<td>" + (item.Note != null ? item.Note : '') + "</td>" +
+                              "<td></td>" +
+                              "<td>" + "<a href='#' class='btn btn-outline-info btn-rounded waves-effect' onclick='" + fn + "'><i class='fa fa-info-circle'></i>  DETAY</a>" + "</td>" +
+                         "</tr>";
+                        }
+                    });
+                    $('#GenelKayit tbody').html(rows);
+                }, error: (err) => console.error(err)
+            })
+        });
+
+    });
+
+    $("#KartIdKaydet").click(function () {
+        var data = {
+            CardId: $('#KartId').val(),
+        }
+        $.ajax({
+            type: "GET",
+            url: "./ManuelKayit?CardId",
+            data: data,
+            success: function (data) {
+                var obj = JSON.stringify(data);
+                $("#KartId").val(obj.CardId);
+                toastr["success"]("Kayıt Kaydedildi...")
+                window.location.href = "./PersonelGirisCikis";
+                $("#KartId").val('');
+            }, error: (err) => console.error(err)
+        })
+    })
+    var kid = 0;
+
+    function PersonelRecord(PersonelId, PAdSoyad) {
+        Notid = 0;
+        CalismaZaman = [];
+        MolaZaman = [];
+        let date = $('#datepicker').val();
+        var url = "./PersonelRecord?KayitId=" + PersonelId + "&date=" + date;
+        $("#TotalGirisler").modal();
+        $("#exampleModalLabel").html(PAdSoyad);
+        console.log(date);
+        $("#notSave").val('');
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                var obj = JSON.parse(JSON.parse(JSON.stringify(data)));
+                $("#id").val(PersonelId);
+                var list = $('#kayit');
+                list.find('tbody tr').remove();
+                list.find('tbody td').remove();
+                document.getElementById("totalMola").innerHTML = "Total Çalışma Zamanı :<strong>0 dk</strong>";
+                document.getElementById("totalCalisma").innerHTML = "Total Mola Zamanı :<strong>0 dk</strong>";
+                CalismaZaman = [];
+                MolaZaman = [];
+                satirSayisi = 0;
+                var rows;
+                $.each(JSON.parse(data), function (i, item) {
+                    CalismaZaman = item.charMolaSaati;
+                    MolaZaman = item.chartCalismaSaati;
+                    console.log(MolaZaman);
+                    if (@Session["uyeTuru"].ToString() == "1") {
+                        if (item.Islem == "Cikis     ") {
+                            if (item.Tipi == true) {
+                                rows += "<tr>" +
+                          "<td>" + "#" + "</td>" +
+                          "<td>" + (item.Tarih.split("T")[1].substring(0, 8)) + "</td>" +
+                          "<td>" + item.Islem + "</td>" +
+                          "<td>" + (item.TotalMinute.toString().substr(0, 4)) + "</td>" +
+                          "<td>" + ("<input type='checkbox' id='checkbox(" + item.Id + ")' name='ids' value='" + item.Id + "' onclick=IslemTik('" + item.Id + "') checked><label for='checkbox(" + item.Id + ")' class='label-table'></label>") + "</td>" +
+                          "<td>" + "<a class='Remove' onclick = 'DetayRemove(" + item.Id + ")'><i class='fa fa-remove'></i></a>" + "</td>" +
+                              "</tr>";
+                            } else {
+                                rows += "<tr>" +
+                           "<td>" + "#" + "</td>" +
+                           "<td>" + (item.Tarih.split("T")[1].substring(0, 8)) + "</td>" +
+                           "<td>" + item.Islem + "</td>" +
+                           "<td>" + (item.TotalMinute.toString().substr(0, 4)) + "</td>" +
+                           "<td>" + ("<input type='checkbox' id='checkbox(" + item.Id + ")' name='ids' value='" + item.Id + "' onclick=IslemTik('" + item.Id + "')><label for='checkbox(" + item.Id + ")' class='label-table'></label>") + "</td>" +
+                           "<td>" + "<a class='Remove' onclick = 'DetayRemove(" + item.Id + ")'><i class='fa fa-remove'></i></a>" + "</td>" +
+                  "</tr>";
+                            }
+
+                        } else {
+                            rows += "<tr>" +
+                            "<td>" + "#" + "</td>" +
+                            "<td>" + (item.Tarih.split("T")[1].substring(0, 8)) + "</td>" +
+                            "<td>" + item.Islem + "</td>" +
+                            "<td>" + (item.TotalMinute.toString().substr(0, 4)) + "</td>" +
+                            "<td></td>" +
+                           "<td>" + "<a class='Remove' onclick = 'DetayRemove(" + item.Id + ")'><i class='fa fa-remove'></i></a>" + "</td>" +
+                   "</tr>";
+                        }
+                    }else {
+                        if (@Session["uyeTuru"].ToString() == "1" || @Session["uyeTuru"].ToString() == "0")
+                        {
+                            if (item.Islem == "Cikis     ") {
+                                if (item.Tipi == true) {
+                                    rows += "<tr>" +
+                              "<td>" + "#" + "</td>" +
+                              "<td>" + (item.Tarih.split("T")[1].substring(0, 8)) + "</td>" +
+                              "<td>" + item.Islem + "</td>" +
+                              "<td>" + (item.TotalMinute.toString().substr(0, 4)) + "</td>" +
+                              "<td>" + ("<input type='checkbox' id='checkbox(" + item.Id + ")' name='ids' value='" + item.Id + "' onclick=IslemTik('" + item.Id + "') checked><label for='checkbox(" + item.Id + ")' class='label-table'></label>") + "</td>" +
+                                  "</tr>";
+                                } else {
+                                    rows += "<tr>" +
+                               "<td>" + "#" + "</td>" +
+                               "<td>" + (item.Tarih.split("T")[1].substring(0, 8)) + "</td>" +
+                               "<td>" + item.Islem + "</td>" +
+                               "<td>" + (item.TotalMinute.toString().substr(0, 4)) + "</td>" +
+                               "<td>" + ("<input type='checkbox' id='checkbox(" + item.Id + ")' name='ids' value='" + item.Id + "' onclick=IslemTik('" + item.Id + "')><label for='checkbox(" + item.Id + ")' class='label-table'></label>") + "</td>" +
+                      "</tr>";
+                                }
+
+
+                            } else {
+                                rows += "<tr>" +
+                                "<td>" + "#" + "</td>" +
+                                "<td>" + (item.Tarih.split("T")[1].substring(0, 8)) + "</td>" +
+                                "<td>" + item.Islem + "</td>" +
+                                "<td>" + (item.TotalMinute.toString().substr(0, 4)) + "</td>" +
+                                "<td></td>" +
+                       "</tr>";
+                            }
+                        }
+                        else {
+                            rows += "<tr>" +
+                              "<td>" + "#" + "</td>" +
+                              "<td>" + (item.Tarih.split("T")[1].substring(0, 8)) + "</td>" +
+                              "<td>" + item.Islem + "</td>" +
+                              "<td>" + (item.TotalMinute.toString().substr(0, 4)) + "</td>" +
+                     "</tr>";
+                        }
+                    }
+                    document.getElementById("totalMola").innerHTML = "Total Çalışma Zamanı :<strong>" + item.TotalCalisma + "</strong>";
+                    document.getElementById("totalCalisma").innerHTML = "Total Mola Zamanı :<strong>" + item.TotalMola + "</strong>";
+
+                });
+                $('#kayit tbody').html(rows);
+                CountRows();
+                //BurayaSehirDısı
+
+
+                document.getElementById('checkSehirDisi').onclick = function() {
+                    if ( this.checked ) {
+                        console.log("Aktif");
+                        var kayitId = $("#id").val();
+                        $.ajax({
+                            type: 'GET',
+                            url: './SehirDisinda?id=' + kayitId,
+                            success: function (data) {
+                                toastr["success"]("Kayıt Edildi...");
+                                window.location.href = "./PersonelGirisCikis";
+                            }
+                        })
+
+                    } else {
+                        console.log("Pasif");
+                    }
+                }
+
+                var ctxD = document.getElementById("doughnutChart").getContext('2d');
+                var myLineChart = new Chart(ctxD, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ["Mola Zamanı", "Calisma Zamanı"],
+                        datasets: [
+                            {
+                                data: [MolaZaman, CalismaZaman],
+                                backgroundColor: ["#F7464A", "#46BFBD"],
+                                hoverBackgroundColor: ["#FF5A5E", "#5AD3D1"]
+                            }
+                        ]
+                    },
+                    options: {
+                        title:{
+                            display : false
+                        }
+                        //responsive: true
+                    }
+                });
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "./NotTableListele?PersonelId=" + PersonelId + "&date=" + date,
+            success: function (data) {
+                var obj = JSON.parse(JSON.parse(JSON.stringify(data)));
+                console.log(data);
+                var list = $('#aciklamatable');
+                list.find('tbody tr').remove();
+                list.find('tbody td').remove();
+                list.find('div').remove();
+                var rows;
+                $.each(JSON.parse(data), function (i, item) {
+                    rows += "<tr>" +
+                       "<td>" + item.id + "</td>" +
+                       "<td style='padding-right: 100px;'>" + item.Not + "</td>" +
+                       "<td style='text-align: center;'>" + " <button type='button' class='btn btn-sm btn-primary px-3 sil' onclick = 'NotDelete(" + item.id + ")'><i class='fa fa-times'></i></button>" + "</td>" +
+                       "<td style='padding-right: 50px;'>" + " <button type='button' class='btn btn-sm btn-warning px-3'onclick = 'NotTextEdit(" + item.id + ")'><i class='fa fa-edit'></i></button>" + "</td>"
+                    "</tr>";
+                });
+                $('#aciklamatable tbody').html(rows);
+            }
+        });
+    }
+
+    function CountRows() {
+        var totalRowCount = 0;
+        var rowCount = 0;
+        var table = document.getElementById("kayit");
+        var rows = table.getElementsByTagName("tr")
+        for (var i = 0; i < rows.length; i++) {
+            totalRowCount++;
+            if (rows[i].getElementsByTagName("td").length > 0) {
+                rowCount++;
+            }
+        }
+        if (rowCount == 1) {
+            document.getElementById("checkSehirDisi").disabled = false;
+            console.log("aktif");
+        }else {
+            document.getElementById("checkSehirDisi").disabled = true;
+            console.log("pasif");
+        }
+    }
+
+    function NotDelete(Notid) {
+        $.ajax({
+            type: "POST",
+            url: "./NotDelete?id=" + Notid,
+            success: function (data) {
+                toastr["success"]("Aciklama Silindi...");
+                window.location.href = "./PersonelGirisCikis";
+            }
+        });
+    }
+
+    $(document).on("click", ".sil", function () {
+        var satir = $(this).closest("tr");
+        satir.remove();
+    });
+
+    function NotTextEdit(NotId) {
+        let date = $('#datepicker').val();
+        $.ajax({
+            type: "GET",
+            url: "./NotList?NotId=" + NotId + "&date=" + date,
+            success: function (data) {
+                var obj = JSON.parse(data);
+                if (obj == null) {
+                    console.log("Kayıt Yok")
+                } else {
+                    $("#notSave").trigger("focusin");
+                    $("#notSave").val(obj.Not);
+                    Notid = obj.id;
+                    console.log(Notid);
+                }
+            }
+        });
+    }
+    var checkIds=0;
+    function IslemTik(checkId) {
+
+
+        console.log(checkId);
+        checkIds = checkId;
+        var x = document.getElementById("checkbox(" + checkId + ")").checked;
+
+
+        if (x == false) {
+            console.log(x);
+            var aciklama = null;
+            $.ajax({
+                type: "Get",
+                url: "./DurumTipi?id=" + checkIds + "&aciklama=" + aciklama,
+                success: function (data) {
+                    toastr["success"]("Kayıt Edildi...");
+                }
+            })
+        } else {
+            $("#musteriModal").modal();
+        }
+
+        //var data = {
+        //    Tipi: $('#checkbox').val(),
+        //}
+        //console.log(checkId);
+        //$.ajax({
+        //    type: "Get",
+        //    url: "./DurumTipi?id=" + checkId,
+        //    success: function (data) {
+        //        toastr["success"]("Kayıt Edildi...");
+        //    }
+        //})
+    }
+
+    $("#MusteriKaydet").click(function () {
+        console.log("Kayıtolucak");
+        var aciklama = $("#musteriBilgisi").val();
+        console.log(aciklama);
+        console.log(checkIds);
+
+        if (aciklama.length <= 0) {
+            toastr["warning"]("Açıklama Giriniz...");
+        } else {
+            $.ajax({
+                type: "Get",
+                url: "./DurumTipi?id=" + checkIds + "&aciklama=" + aciklama,
+                success: function (data) {
+                    toastr["success"]("Kayıt Edildi...");
+                    window.location.href = "./PersonelGirisCikis";
+                }
+            })
+        }
+    })
+
+    $("#vazgec").click(function () {
+        $("#musteriModal").modal("hide");
+        $("#TotalGirisler").modal("hide");
+    })
+
+    $("#SaveAddNote").click(function () {
+        var rows = document.getElementById('kayit').getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
+        console.log(rows);
+        if ($("#notSave").val() != "") {
+            var data = {
+                KayitId: $('#id').val(),
+                Not: $('#notSave').val(),
+                Tarih: $('#datepicker').val()
+            }
+            console.log(data);
+            $.ajax({
+                type: "Post",
+                url: "./PersonelNotAdd?NotId=" + Notid,
+                data: data,
+                success: function (result) {
+                    toastr["success"]("Notunuz Kaydedildi...")
+                    $("#notSave").val('');
+                    $("#TotalGirisler").modal("hide");
+                    window.location.href = "./PersonelGirisCikis";
+                }
+            })
+        }
+        else {
+            toastr["error"]("Not Alanı Boş Bırakmayınız...")
+        }
+    })
+
+
+    function DetayRemove(id) {
+        console.log(id);
+        $("#silId").val(id);
+        $("#silModal").modal();
+    }
+
+    $("#btnSil").click(function () {
+        var id = $("#silId").val();
+        $.ajax({
+            type: "POST",
+            url: "./GirisCikisDetaySil",
+            data: { "id": id },
+            dataType: "json",
+            success: function (data) {
+                $("#silModal").modal("hide");
+                window.location.href = "./PersonelGirisCikis";
+            }
+        });
+    });
+
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+          , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+          , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+          , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+
+    function myFunction() {
+        if (@Session["uyeTuru"].ToString() == "1")
+        {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("GenelKayit");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++)
+            {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td)
+                {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
+                    {
+                        tr[i].style.display = "";
+                    }
+                    else
+                    {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+        else {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("GenelKayit");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++)
+            {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td)
+                {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1)
+                    {
+                        tr[i].style.display = "";
+                    }
+                    else
+                    {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
+
+
+    function sortTable(n) {
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("GenelKayit");
+        switching = true;
+        dir = "asc";
+        while (switching) {
+            switching = false;
+            rows = table.getElementsByTagName("tr");
+            for (i = 1; i < (rows.length - 1) ; i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("td")[n];
+                y = rows[i + 1].getElementsByTagName("td")[n];
+                if (dir == "asc") {
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+                switchcount++;
+            } else {
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
+</script>

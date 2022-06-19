@@ -1,0 +1,259 @@
+﻿
+@model IEnumerable<PersonnelTracking.ViewModel.HaftalikPersonel>
+@{
+    ViewBag.Title = "UserHaftalik";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main>
+    <style>
+        .input-group.md-form.form-sm.form-2 input {
+            border: 1px solid #bdbdbd;
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+            .input-group.md-form.form-sm.form-2 input.grey-border {
+                border: 1px solid #e9ecef;
+            }
+
+        .input-group input[type=text]:focus:not([readonly]) {
+            box-shadow: none;
+        }
+
+        .form-2 .input-group-text {
+            border: 1px solid #e9ecef;
+        }
+    </style>
+    <div id="loader-wrapper" style="display:none;">
+        <div id="loader"></div>
+    </div>
+    <br /><br />
+    <div class="container-fluid text-center">
+        <div class="card card-cascade narrower">
+            <section>
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 mr-0">
+                        <div class="view gradient-card-header light-blue lighten-1">
+                            <h2 class="h2-responsive mb-0">Haftalık Personel Takip Giris-Cikis</h2>
+                        </div>
+                        <div class="card-body pb-0">
+                            <div class="row card-body pt-3">
+
+                                <!--First column-->
+                                <div class="col-md-4">
+                                    <div class="md-form">
+                                        <input placeholder="Selected date" type="text" id="datepickerr" class="form-control datepicker picker__input" readonly="" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="from_root"><div class="picker" id="from_root" aria-hidden="true"><div class="picker__holder" tabindex="-1"><div class="picker__frame"><div class="picker__wrap"><div class="picker__box"><div class="picker__header"><div class="picker__date-display"><div class="picker__weekday-display">Tuesday</div><div class="picker__month-display"><div>Jul</div></div><div class="picker__day-display"><div>03</div></div><div class="picker__year-display"><div>2018</div></div></div><select class="picker__select--year" aria-controls="from_table" title="Select a year" disabled="disabled"><option value="2011">2011</option><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018" selected="">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option></select><select class="picker__select--month" aria-controls="from_table" title="Select a month" disabled="disabled"><option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6" selected="">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option></select><div class="picker__nav--prev" data-nav="-1" role="button" aria-controls="from_table" title="Previous month"> </div><div class="picker__nav--next" data-nav="1" role="button" aria-controls="from_table" title="Next month"> </div></div><table class="picker__table" id="from_table" role="grid" aria-controls="from" aria-readonly="true"><thead><tr><th class="picker__weekday" scope="col" title="Sunday">Sun</th><th class="picker__weekday" scope="col" title="Monday">Mon</th><th class="picker__weekday" scope="col" title="Tuesday">Tue</th><th class="picker__weekday" scope="col" title="Wednesday">Wed</th><th class="picker__weekday" scope="col" title="Thursday">Thu</th><th class="picker__weekday" scope="col" title="Friday">Fri</th><th class="picker__weekday" scope="col" title="Saturday">Sat</th></tr></thead><tbody><tr><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1530392400000" role="gridcell" aria-label="1 July, 2018">1</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1530478800000" role="gridcell" aria-label="2 July, 2018">2</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--today picker__day--highlighted" data-pick="1530565200000" role="gridcell" aria-label="3 July, 2018" aria-activedescendant="true">3</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1530651600000" role="gridcell" aria-label="4 July, 2018">4</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1530738000000" role="gridcell" aria-label="5 July, 2018">5</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1530824400000" role="gridcell" aria-label="6 July, 2018">6</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1530910800000" role="gridcell" aria-label="7 July, 2018">7</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1530997200000" role="gridcell" aria-label="8 July, 2018">8</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1531083600000" role="gridcell" aria-label="9 July, 2018">9</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1531170000000" role="gridcell" aria-label="10 July, 2018">10</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1531256400000" role="gridcell" aria-label="11 July, 2018">11</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1531342800000" role="gridcell" aria-label="12 July, 2018">12</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1531429200000" role="gridcell" aria-label="13 July, 2018">13</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1531515600000" role="gridcell" aria-label="14 July, 2018">14</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1531602000000" role="gridcell" aria-label="15 July, 2018">15</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1531688400000" role="gridcell" aria-label="16 July, 2018">16</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1531774800000" role="gridcell" aria-label="17 July, 2018">17</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1531861200000" role="gridcell" aria-label="18 July, 2018">18</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1531947600000" role="gridcell" aria-label="19 July, 2018">19</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1532034000000" role="gridcell" aria-label="20 July, 2018">20</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1532120400000" role="gridcell" aria-label="21 July, 2018">21</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1532206800000" role="gridcell" aria-label="22 July, 2018">22</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1532293200000" role="gridcell" aria-label="23 July, 2018">23</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1532379600000" role="gridcell" aria-label="24 July, 2018">24</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1532466000000" role="gridcell" aria-label="25 July, 2018">25</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1532552400000" role="gridcell" aria-label="26 July, 2018">26</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1532638800000" role="gridcell" aria-label="27 July, 2018">27</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1532725200000" role="gridcell" aria-label="28 July, 2018">28</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1532811600000" role="gridcell" aria-label="29 July, 2018">29</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1532898000000" role="gridcell" aria-label="30 July, 2018">30</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1532984400000" role="gridcell" aria-label="31 July, 2018">31</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1533070800000" role="gridcell" aria-label="1 August, 2018">1</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1533157200000" role="gridcell" aria-label="2 August, 2018">2</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1533243600000" role="gridcell" aria-label="3 August, 2018">3</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1533330000000" role="gridcell" aria-label="4 August, 2018">4</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1533416400000" role="gridcell" aria-label="5 August, 2018">5</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1533502800000" role="gridcell" aria-label="6 August, 2018">6</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1533589200000" role="gridcell" aria-label="7 August, 2018">7</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1533675600000" role="gridcell" aria-label="8 August, 2018">8</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1533762000000" role="gridcell" aria-label="9 August, 2018">9</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1533848400000" role="gridcell" aria-label="10 August, 2018">10</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1533934800000" role="gridcell" aria-label="11 August, 2018">11</div></td></tr></tbody></table><div class="picker__footer"><button class="picker__button--today" type="button" data-pick="1530565200000" aria-controls="from" disabled="disabled">Today</button><button class="picker__button--clear" type="button" data-clear="1" aria-controls="from" disabled="disabled">Clear</button><button class="picker__button--close" type="button" data-close="true" aria-controls="from" disabled="disabled">Close</button></div></div></div></div></div></div>
+                                        <label for="date-picker-example" class="active">Hafta Seciniz</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <hr />
+            <section>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div> <p id="Tarih">  -/- Tarihleri Arasındaki Kayıtlar </p> </div>
+                                <div class="input-group md-form form-sm form-2 pl-0 mb-0">
+                                    <input class="form-control my-0 py-1 grey-border" type="text" placeholder="Search" aria-label="Search" id="myInput" onkeyup="myFunction()">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text waves-effect grey lighten-3" id="basic-addon1">
+                                            <a><i class="fa fa-search text-grey" aria-hidden="true"></i></a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped" id="Kayitlar">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th onclick="sortTable(1)" style="cursor: pointer;">Personel Adı Soyadı<i class="fa fa-sort ml-1"></i></th>
+                                    <th onclick="sortTable(2)" style="cursor: pointer;">Pazartesi<i class="fa fa-sort ml-1"></i></th>
+                                    <th onclick="sortTable(3)" style="cursor: pointer;">Salı<i class="fa fa-sort ml-1"></i></th>
+                                    <th onclick="sortTable(4)" style="cursor: pointer;">Çarşamba<i class="fa fa-sort ml-1"></i></th>
+                                    <th onclick="sortTable(5)" style="cursor: pointer;">Perşembe<i class="fa fa-sort ml-1"></i></th>
+                                    <th onclick="sortTable(6)" style="cursor: pointer;">Cuma<i class="fa fa-sort ml-1"></i></th>
+                                    <th onclick="sortTable(7)" style="cursor: pointer;">Cumartesi<i class="fa fa-sort ml-1"></i></th>
+                                    <th onclick="sortTable(8)" style="cursor: pointer;">Pazar<i class="fa fa-sort ml-1"></i></th>
+                                    <th onclick="sortTable(9)" style="cursor: pointer;">Total İzim<i class="fa fa-sort ml-1"></i></th>
+                                    @*<th onclick="sortTable(10)" style="cursor: pointer;">Ortalama Calisma Saati<i class="fa fa-sort ml-1"></i></th>*@
+                                    <th onclick="sortTable(11)" style="cursor: pointer;">Total Sure<i class="fa fa-sort ml-1"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#</td>
+                                    <td></td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <br /><br />
+
+    <script>
+        $(document).ready(function () {
+            $('.datepicker').pickadate({
+                monthsFull: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+                monthsShort: ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Aug', 'Eyl', 'Eki', 'Kas', 'Ara'],
+                weekdaysFull: ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'],
+                weekdaysShort: ['Pzr', 'Pzt', 'Sal', 'Car', 'Per', 'Cum', 'Cmt'],
+                today: 'Bugün',
+                clear: 'Temizle',
+                close: 'Kapat',
+                labelMonthNext: 'Sonraki Ay',
+                labelMonthPrev: 'Önceki Ay',
+                labelMonthSelect: 'Ay Seçiniz',
+                labelYearSelect: 'Yıl Seçiniz',
+                format: 'dd.mm.yyyy',
+                firstDay: 1
+            });
+
+
+            $('#datepickerr').change(() => {
+                console.log('sasdasd');
+                $("#loader-wrapper").show();
+                //document.getElementById("excel").disabled = true;
+                let date = $('#datepickerr').val();
+                var url = "./WeekFilter?gelen=" + date;
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (data) {
+                        $("#loader-wrapper").hide();
+                        data = JSON.parse(JSON.parse(JSON.stringify(data)));
+                        console.log(data);
+                        var list = $('#Kayitlar tbody');
+                        list.find('tbody tr').remove();
+                        list.find('tbody th').remove();
+                        list.find('div').remove();
+                        var rows;
+                        $.each(data, (i, item) => {
+                            document.getElementById("Tarih").innerHTML = "<strong>" + item.BaslangicTarihi.substring(8, 10) + "." + item.BaslangicTarihi.substring(5, 7) + "." + item.BaslangicTarihi.substring(0, 4) + "</strong>" + "/<strong>" + item.BitisTarihi.substring(8, 10) + "." + item.BitisTarihi.substring(5, 7) + "." + item.BitisTarihi.substring(0, 4) + "</strong> Tarihleri Arasındaki Kayıtlar";
+                            //console.log(item.WorkTime.Monday.substring(0, 1));
+                            // var totalhesapla = item.WorkTime.Monday.substring(0, 1);
+                            //var totalhesapla2 = item.WorkTime.Tuesday.substring(0, 1);
+                            //var sonuc = parseInt(totalhesapla) + parseInt(totalhesapla2);
+                            var total = item.HaftalikTotal.split('s:')[0];
+                            console.log(item.WorkTime.Monday);
+                            rows += "<tr>" +
+                                "<td>" + "#" + "</td>" +
+                                "<td>" + item.PAdSoyad + "</td>";
+                            if (item.WorkTime.Monday == "00s:00dk" || item.WorkTime.Monday == undefined) {
+                                rows += "<td>-</td>";
+                            } else {
+                                rows += "<td>" + item.WorkTime.Monday + "</td>";
+                            }
+                            if (item.WorkTime.Tuesday == "00s:00dk" || item.WorkTime.Monday == undefined) {
+                                rows += "<td>-</td>";
+                            } else {
+                                rows += "<td>" + item.WorkTime.Tuesday + "</td>";
+                            }
+                            if (item.WorkTime.Wednesday == "00s:00dk" || item.WorkTime.Monday == undefined) {
+                                rows += "<td>-</td>";
+                            } else {
+                                rows += "<td>" + item.WorkTime.Wednesday + "</td>";
+                            }
+                            if (item.WorkTime.Thursday == "00s:00dk" || item.WorkTime.Monday == undefined) {
+                                rows += "<td>-</td>";
+                            } else {
+                                rows += "<td>" + item.WorkTime.Thursday + "</td>";
+                            }
+                            if (item.WorkTime.Friday == "00s:00dk" || item.WorkTime.Monday == undefined) {
+                                rows += "<td>-</td>";
+                            } else {
+                                rows += "<td>" + item.WorkTime.Friday + "</td>";
+                            }
+                            if (item.WorkTime.Saturday == "00s:00dk" || item.WorkTime.Monday == undefined) {
+                                rows += "<td>-</td>";
+                            } else {
+                                rows += "<td>" + item.WorkTime.Saturday + "</td>";
+                            }
+                            if (item.WorkTime.Sunday == "00s:00dk" || item.WorkTime.Sunday == undefined) {
+                                rows += "<td>-</td>";
+                            } else {
+                                rows += "<td>" + item.WorkTime.Sunday + "</td>";
+                            }
+                            if (item.IzinSaati == "00s:00dk" || item.IzinSaati == undefined || item.IzinSaati == "") {
+                                rows += "<td>-</td>";
+                            } else {
+                                rows += "<td>" + item.IzinSaati + "</td>";
+                            }
+                            //if (item.gunluktotalcalisma > 0) {
+                            //    rows += "<td>" + item.GunlukTotalCalisma + "</td>";
+                            //} else {
+                            //    rows += "<td>" + item.GunlukTotalCalisma + "</td>";
+                            //}
+                            if (total >= 45) {
+                                rows += "<td style='color:#07ca07'><strong><span>" + item.HaftalikTotal + "</span></strong></td>";
+                            }
+                            else {
+                                if (item.HaftalikTotal == "00s:00dk") {
+                                    rows += "<td style='color:red'><strong><span>00s:00dk</span></strong></td>";
+                                } else {
+                                    rows += "<td  style='color:red'><strong><span>" + item.HaftalikTotal + "</span></strong></td>";
+                                }
+                            }
+
+                            "</tr>";
+                        })
+                        $('#Kayitlar tbody').html(rows);
+                    }
+                });
+            })
+        });
+
+
+        function myFunction() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("Kayitlar");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        var tableToExcel = (function () {
+            var uri = 'data:application/vnd.ms-excel;base64,'
+                , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+                , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+                , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+            return function (table, name) {
+                if (!table.nodeType) table = document.getElementById(table)
+                var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+
+    </script>
+</main>
+
+

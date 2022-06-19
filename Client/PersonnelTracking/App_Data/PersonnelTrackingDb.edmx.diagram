@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ea4d582df7d6451789991d7b1760c76a" Name="Diagram1">
+        <EntityTypeShape EntityType="PersonnelTrackingModel.Login" Width="1.5" PointX="8.125" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PersonnelTrackingModel.Hareketler" Width="1.5" PointX="2.875" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PersonnelTrackingModel.KayitliPersonel" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="PersonnelTrackingModel.Notlar" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="PersonnelTrackingModel.FK_Hareketler_KayitliPersonel" ManuallyRouted="false" />
+        <AssociationConnector Association="PersonnelTrackingModel.FK_Notlar_Notlar" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PersonnelTrackingModel.Izinler" Width="1.5" PointX="5.25" PointY="3" />
+        <AssociationConnector Association="PersonnelTrackingModel.FK_Izınler_KayitliPersonel" />
+        <EntityTypeShape EntityType="PersonnelTrackingModel.Departman" Width="1.5" PointX="10.25" PointY="0.875" />
+        <AssociationConnector Association="PersonnelTrackingModel.FK_KayitliPersonel_Departman" />
+        <AssociationConnector Association="PersonnelTrackingModel.FK_Departman_Departman" />
+        <EntityTypeShape EntityType="PersonnelTrackingModel.Ayarlar" Width="1.5" PointX="6.75" PointY="0.625" />
+        <EntityTypeShape EntityType="PersonnelTrackingModel.Log" Width="1.5" PointX="11.5" PointY="3.5" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,529 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="KodPersonelDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ayarlar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="50" />
+          <Property Name="Key" Type="bit" />
+          <Property Name="Saats" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="Departman">
+          <Key>
+            <PropertyRef Name="DepartmanID" />
+          </Key>
+          <Property Name="DepartmanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmanName" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Izinler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KId" Type="int" />
+          <Property Name="BaslangicTarihi" Type="datetime" />
+          <Property Name="BitisTarihi" Type="datetime" />
+          <Property Name="IzinTuru" Type="nvarchar" MaxLength="50" />
+          <Property Name="Aciklama" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IpAdress" Type="nvarchar" MaxLength="50" />
+          <Property Name="PcName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MacAdress" Type="nvarchar" MaxLength="50" />
+          <Property Name="PageName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Operation" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="UserName" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="uyeTuru" Type="int" />
+        </EntityType>
+        <EntityType Name="Hareketler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KayitId" Type="int" />
+          <Property Name="Tarih" Type="datetime" />
+          <Property Name="Islem" Type="nchar" MaxLength="10" />
+          <Property Name="operation" Type="int" />
+          <Property Name="Tipi" Type="bit" />
+          <Property Name="SehirDisi" Type="bit" />
+          <Property Name="MusteriBİlgisi" Type="nvarchar" MaxLength="50" />
+          <Property Name="SourceId" Type="int" />
+          <Property Name="MusteriTipiDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="KayitliPersonel">
+          <Key>
+            <PropertyRef Name="KId" />
+          </Key>
+          <Property Name="KId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KartID" Type="nvarchar" MaxLength="50" />
+          <Property Name="PAdSoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="DogumTarihi" Type="date" />
+          <Property Name="EPosta" Type="nvarchar" MaxLength="50" />
+          <Property Name="CepNum" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adres" Type="nvarchar(max)" />
+          <Property Name="IseBaslamaTarihi" Type="date" />
+          <Property Name="FotoYol" Type="nchar" MaxLength="100" />
+          <Property Name="FingerID" Type="int" />
+          <Property Name="DepartmanID" Type="int" />
+          <Property Name="Silindi" Type="bit" />
+          <Property Name="QRPath" Type="nvarchar(max)" />
+          <Property Name="MobilePass" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Notlar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KayitId" Type="int" Nullable="false" />
+          <Property Name="Tarih" Type="datetime" />
+          <Property Name="Not" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK_Departman_Departman">
+          <End Role="Departman" Type="Self.Departman" Multiplicity="1" />
+          <End Role="Departman1" Type="Self.Departman" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Departman">
+              <PropertyRef Name="DepartmanID" />
+            </Principal>
+            <Dependent Role="Departman1">
+              <PropertyRef Name="DepartmanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hareketler_KayitliPersonel">
+          <End Role="KayitliPersonel" Type="Self.KayitliPersonel" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Hareketler" Type="Self.Hareketler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KayitliPersonel">
+              <PropertyRef Name="KId" />
+            </Principal>
+            <Dependent Role="Hareketler">
+              <PropertyRef Name="KayitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Izınler_KayitliPersonel">
+          <End Role="KayitliPersonel" Type="Self.KayitliPersonel" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Izinler" Type="Self.Izinler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KayitliPersonel">
+              <PropertyRef Name="KId" />
+            </Principal>
+            <Dependent Role="Izinler">
+              <PropertyRef Name="KId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KayitliPersonel_Departman">
+          <End Role="Departman" Type="Self.Departman" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="KayitliPersonel" Type="Self.KayitliPersonel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departman">
+              <PropertyRef Name="DepartmanID" />
+            </Principal>
+            <Dependent Role="KayitliPersonel">
+              <PropertyRef Name="DepartmanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notlar_Notlar">
+          <End Role="KayitliPersonel" Type="Self.KayitliPersonel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Notlar" Type="Self.Notlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KayitliPersonel">
+              <PropertyRef Name="KId" />
+            </Principal>
+            <Dependent Role="Notlar">
+              <PropertyRef Name="KayitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KodPersonelDbModelStoreContainer">
+          <EntitySet Name="Ayarlar" EntityType="Self.Ayarlar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departman" EntityType="Self.Departman" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Izinler" EntityType="Self.Izinler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hareketler" EntityType="Self.Hareketler" Schema="dogantestdb" store:Type="Tables" />
+          <EntitySet Name="KayitliPersonel" EntityType="Self.KayitliPersonel" Schema="dogantestdb" store:Type="Tables" />
+          <EntitySet Name="Notlar" EntityType="Self.Notlar" Schema="dogantestdb" store:Type="Tables" />
+          <AssociationSet Name="FK_Departman_Departman" Association="Self.FK_Departman_Departman">
+            <End Role="Departman" EntitySet="Departman" />
+            <End Role="Departman1" EntitySet="Departman" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hareketler_KayitliPersonel" Association="Self.FK_Hareketler_KayitliPersonel">
+            <End Role="KayitliPersonel" EntitySet="KayitliPersonel" />
+            <End Role="Hareketler" EntitySet="Hareketler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Izınler_KayitliPersonel" Association="Self.FK_Izınler_KayitliPersonel">
+            <End Role="KayitliPersonel" EntitySet="KayitliPersonel" />
+            <End Role="Izinler" EntitySet="Izinler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KayitliPersonel_Departman" Association="Self.FK_KayitliPersonel_Departman">
+            <End Role="Departman" EntitySet="Departman" />
+            <End Role="KayitliPersonel" EntitySet="KayitliPersonel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notlar_Notlar" Association="Self.FK_Notlar_Notlar">
+            <End Role="KayitliPersonel" EntitySet="KayitliPersonel" />
+            <End Role="Notlar" EntitySet="Notlar" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PersonnelTrackingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="uyeTuru" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Hareketler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KayitId" Type="Int32" />
+          <Property Name="Tarih" Type="DateTime" Precision="3" />
+          <Property Name="Islem" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="operation" Type="Int32" />
+          <NavigationProperty Name="KayitliPersonel" Relationship="Self.FK_Hareketler_KayitliPersonel" FromRole="Hareketler" ToRole="KayitliPersonel" />
+          <Property Name="Tipi" Type="Boolean" />
+          <Property Name="SehirDisi" Type="Boolean" />
+          <Property Name="MusteriBİlgisi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SourceId" Type="Int32" />
+          <Property Name="MusteriTipiDateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="KayitliPersonel">
+          <Key>
+            <PropertyRef Name="KId" />
+          </Key>
+          <Property Name="KId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KartID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PAdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DogumTarihi" Type="DateTime" Precision="0" />
+          <Property Name="EPosta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CepNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FotoYol" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Hareketler" Relationship="Self.FK_Hareketler_KayitliPersonel" FromRole="KayitliPersonel" ToRole="Hareketler" />
+          <NavigationProperty Name="Notlar" Relationship="Self.FK_Notlar_Notlar" FromRole="KayitliPersonel" ToRole="Notlar" />
+          <Property Name="FingerID" Type="Int32" />
+          <NavigationProperty Name="Izinler" Relationship="PersonnelTrackingModel.FK_Izınler_KayitliPersonel" FromRole="KayitliPersonel" ToRole="Izinler" />
+          <Property Name="IseBaslamaTarihi" Type="DateTime" Precision="0" />
+          <Property Name="Silindi" Type="Boolean" />
+          <Property Name="DepartmanID" Type="Int32" />
+          <NavigationProperty Name="Departman" Relationship="PersonnelTrackingModel.FK_KayitliPersonel_Departman" FromRole="KayitliPersonel" ToRole="Departman" />
+          <Property Name="QRPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MobilePass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Notlar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KayitId" Type="Int32" Nullable="false" />
+          <Property Name="Tarih" Type="DateTime" Precision="3" />
+          <Property Name="Not" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="KayitliPersonel" Relationship="Self.FK_Notlar_Notlar" FromRole="Notlar" ToRole="KayitliPersonel" />
+        </EntityType>
+        <Association Name="FK_Hareketler_KayitliPersonel">
+          <End Role="KayitliPersonel" Type="Self.KayitliPersonel" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Hareketler" Type="Self.Hareketler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KayitliPersonel">
+              <PropertyRef Name="KId" />
+            </Principal>
+            <Dependent Role="Hareketler">
+              <PropertyRef Name="KayitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Notlar_Notlar">
+          <End Role="KayitliPersonel" Type="Self.KayitliPersonel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Notlar" Type="Self.Notlar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KayitliPersonel">
+              <PropertyRef Name="KId" />
+            </Principal>
+            <Dependent Role="Notlar">
+              <PropertyRef Name="KayitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PersonnelTrackingDb" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Login" EntityType="Self.Login" />
+          <EntitySet Name="Hareketler" EntityType="Self.Hareketler" />
+          <EntitySet Name="KayitliPersonel" EntityType="Self.KayitliPersonel" />
+          <EntitySet Name="Notlar" EntityType="Self.Notlar" />
+          <AssociationSet Name="FK_Hareketler_KayitliPersonel" Association="Self.FK_Hareketler_KayitliPersonel">
+            <End Role="KayitliPersonel" EntitySet="KayitliPersonel" />
+            <End Role="Hareketler" EntitySet="Hareketler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notlar_Notlar" Association="Self.FK_Notlar_Notlar">
+            <End Role="KayitliPersonel" EntitySet="KayitliPersonel" />
+            <End Role="Notlar" EntitySet="Notlar" />
+          </AssociationSet>
+          <EntitySet Name="Izinler" EntityType="PersonnelTrackingModel.Izinler" />
+          <AssociationSet Name="FK_Izınler_KayitliPersonel" Association="PersonnelTrackingModel.FK_Izınler_KayitliPersonel">
+            <End Role="KayitliPersonel" EntitySet="KayitliPersonel" />
+            <End Role="Izinler" EntitySet="Izinler" />
+          </AssociationSet>
+          <EntitySet Name="Departman" EntityType="PersonnelTrackingModel.Departman" />
+          <AssociationSet Name="FK_KayitliPersonel_Departman" Association="PersonnelTrackingModel.FK_KayitliPersonel_Departman">
+            <End Role="Departman" EntitySet="Departman" />
+            <End Role="KayitliPersonel" EntitySet="KayitliPersonel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Departman_Departman" Association="PersonnelTrackingModel.FK_Departman_Departman">
+            <End Role="Departman" EntitySet="Departman" />
+            <End Role="Departman1" EntitySet="Departman" />
+          </AssociationSet>
+          <EntitySet Name="Ayarlar" EntityType="PersonnelTrackingModel.Ayarlar" />
+          <EntitySet Name="Log" EntityType="PersonnelTrackingModel.Log" />
+        </EntityContainer>
+        <EntityType Name="Izinler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KId" Type="Int32" />
+          <Property Name="BaslangicTarihi" Type="DateTime" Precision="3" />
+          <Property Name="BitisTarihi" Type="DateTime" Precision="3" />
+          <Property Name="IzinTuru" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Aciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KayitliPersonel" Relationship="PersonnelTrackingModel.FK_Izınler_KayitliPersonel" FromRole="Izinler" ToRole="KayitliPersonel" />
+        </EntityType>
+        <Association Name="FK_Izınler_KayitliPersonel">
+          <End Type="PersonnelTrackingModel.KayitliPersonel" Role="KayitliPersonel" Multiplicity="0..1" />
+          <End Type="PersonnelTrackingModel.Izinler" Role="Izinler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KayitliPersonel">
+              <PropertyRef Name="KId" />
+            </Principal>
+            <Dependent Role="Izinler">
+              <PropertyRef Name="KId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Departman">
+          <Key>
+            <PropertyRef Name="DepartmanID" />
+          </Key>
+          <Property Name="DepartmanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmanName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="KayitliPersonel" Relationship="PersonnelTrackingModel.FK_KayitliPersonel_Departman" FromRole="Departman" ToRole="KayitliPersonel" />
+          <NavigationProperty Name="Departman1" Relationship="PersonnelTrackingModel.FK_Departman_Departman" FromRole="Departman" ToRole="Departman1" />
+          <NavigationProperty Name="Departman2" Relationship="PersonnelTrackingModel.FK_Departman_Departman" FromRole="Departman1" ToRole="Departman" />
+        </EntityType>
+        <Association Name="FK_KayitliPersonel_Departman">
+          <End Type="PersonnelTrackingModel.Departman" Role="Departman" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PersonnelTrackingModel.KayitliPersonel" Role="KayitliPersonel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departman">
+              <PropertyRef Name="DepartmanID" />
+            </Principal>
+            <Dependent Role="KayitliPersonel">
+              <PropertyRef Name="DepartmanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Departman_Departman">
+          <End Type="PersonnelTrackingModel.Departman" Role="Departman" Multiplicity="1" />
+          <End Type="PersonnelTrackingModel.Departman" Role="Departman1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Departman">
+              <PropertyRef Name="DepartmanID" />
+            </Principal>
+            <Dependent Role="Departman1">
+              <PropertyRef Name="DepartmanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Ayarlar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Key" Type="Boolean" />
+          <Property Name="Saats" Type="Time" Precision="7" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IpAdress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PcName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MacAdress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Operation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="UserName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KodPersonelDbModelStoreContainer" CdmEntityContainer="PersonnelTrackingDb">
+          <EntitySetMapping Name="Login">
+            <EntityTypeMapping TypeName="PersonnelTrackingModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KAdi" ColumnName="KAdi" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="uyeTuru" ColumnName="uyeTuru" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hareketler">
+            <EntityTypeMapping TypeName="PersonnelTrackingModel.Hareketler">
+              <MappingFragment StoreEntitySet="Hareketler">
+                <ScalarProperty Name="MusteriTipiDateTime" ColumnName="MusteriTipiDateTime" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="MusteriBİlgisi" ColumnName="MusteriBİlgisi" />
+                <ScalarProperty Name="SehirDisi" ColumnName="SehirDisi" />
+                <ScalarProperty Name="Tipi" ColumnName="Tipi" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KayitId" ColumnName="KayitId" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Islem" ColumnName="Islem" />
+                <ScalarProperty Name="operation" ColumnName="operation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KayitliPersonel">
+            <EntityTypeMapping TypeName="PersonnelTrackingModel.KayitliPersonel">
+              <MappingFragment StoreEntitySet="KayitliPersonel">
+                <ScalarProperty Name="MobilePass" ColumnName="MobilePass" />
+                <ScalarProperty Name="QRPath" ColumnName="QRPath" />
+                <ScalarProperty Name="DepartmanID" ColumnName="DepartmanID" />
+                <ScalarProperty Name="Silindi" ColumnName="Silindi" />
+                <ScalarProperty Name="IseBaslamaTarihi" ColumnName="IseBaslamaTarihi" />
+                <ScalarProperty Name="FingerID" ColumnName="FingerID" />
+                <ScalarProperty Name="KId" ColumnName="KId" />
+                <ScalarProperty Name="KartID" ColumnName="KartID" />
+                <ScalarProperty Name="PAdSoyad" ColumnName="PAdSoyad" />
+                <ScalarProperty Name="DogumTarihi" ColumnName="DogumTarihi" />
+                <ScalarProperty Name="EPosta" ColumnName="EPosta" />
+                <ScalarProperty Name="CepNum" ColumnName="CepNum" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="FotoYol" ColumnName="FotoYol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notlar">
+            <EntityTypeMapping TypeName="PersonnelTrackingModel.Notlar">
+              <MappingFragment StoreEntitySet="Notlar">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="KayitId" ColumnName="KayitId" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Not" ColumnName="Not" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Izinler">
+            <EntityTypeMapping TypeName="PersonnelTrackingModel.Izinler">
+              <MappingFragment StoreEntitySet="Izinler">
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="IzinTuru" ColumnName="IzinTuru" />
+                <ScalarProperty Name="BitisTarihi" ColumnName="BitisTarihi" />
+                <ScalarProperty Name="BaslangicTarihi" ColumnName="BaslangicTarihi" />
+                <ScalarProperty Name="KId" ColumnName="KId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departman">
+            <EntityTypeMapping TypeName="PersonnelTrackingModel.Departman">
+              <MappingFragment StoreEntitySet="Departman">
+                <ScalarProperty Name="DepartmanName" ColumnName="DepartmanName" />
+                <ScalarProperty Name="DepartmanID" ColumnName="DepartmanID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ayarlar">
+            <EntityTypeMapping TypeName="PersonnelTrackingModel.Ayarlar">
+              <MappingFragment StoreEntitySet="Ayarlar">
+                <ScalarProperty Name="Saats" ColumnName="Saats" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Log">
+            <EntityTypeMapping TypeName="PersonnelTrackingModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="MacAdress" ColumnName="MacAdress" />
+                <ScalarProperty Name="PcName" ColumnName="PcName" />
+                <ScalarProperty Name="IpAdress" ColumnName="IpAdress" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

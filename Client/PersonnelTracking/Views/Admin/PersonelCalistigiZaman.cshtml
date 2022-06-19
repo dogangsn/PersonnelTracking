@@ -1,0 +1,50 @@
+﻿@model IEnumerable<PersonnelTracking.ViewModel.CalismaSaatleri>
+@{
+    ViewBag.Title = "PersonelCalistigiZaman";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<main>
+    <br /><br />
+    <div class="container-fluid text-center">
+        <div class="card card-cascade narrower">
+            <section>
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 mr-0">
+                        <div class="view gradient-card-header light-blue lighten-1">
+                            <h2 class="h2-responsive mb-0">Günlük Personel Çalışma Saatleri</h2>
+                        </div>
+                        <br /> @DateTime.Now.ToString("dd-MM-yyyy") <hr />
+                        <table class="table table-striped table-responsive-md btn-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Personel Adı Soyadı</th>
+                                    <th>Giriş Saati</th>
+                                    <th>Çıkıs Saati</th>
+                                    <th>Total Calışma Saati</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var kayitlar in Model)
+                                {
+                                    <tr>
+                                        <td>@kayitlar.KayitId</td>
+                                        <td>@kayitlar.PAdSoyad</td>
+                                        <td>@kayitlar.GirisSaati</td>
+                                        <td>@kayitlar.CikisSaati</td>
+                                        <td>@kayitlar.Dakika<strong>&ensp;dk</strong> (@kayitlar.Sure)</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <br /><br />
+</main>
