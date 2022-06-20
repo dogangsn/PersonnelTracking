@@ -25,8 +25,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracking.Models", "Framewor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracking.Services", "Framework\Tracking.Services\Tracking.Services.csproj", "{8AE5E250-D9D7-494D-AD1A-42FF7805E38D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{088DDFC4-018C-4B54-A0E0-C0811579CB20}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{76D5F544-18E4-46D5-9E28-9AEAD5783C5A}"
 	ProjectSection(SolutionItems) = preProject
 		DataBaseCreate.sql = DataBaseCreate.sql
